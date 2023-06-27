@@ -1,0 +1,266 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+body{
+  background: #f7f7f7;
+  color: #545454;
+}
+
+.navbar{
+  width: 100%;
+  height: 60px;
+  background: #111a2f;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 80px;
+}
+
+.navbar .inner_navbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 110%;
+
+}
+.navbar .inner_navbar .menu {
+  display: flex;
+  align-items: center;
+  padding-left: 100px;
+}
+
+.logo {
+  padding-bottom: 10px;
+}
+
+.navbar .logo a {
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: #fff;
+  height: 40px;
+}
+
+.navbar .logo a span {
+  color: #1fa2a0;
+}
+
+
+
+@media (max-width: 1230px) {
+
+
+  .navbar .inner_navbar .menu ul li:not(:first-child) {
+    display: none;
+  }
+
+  .wrapper .navbar .inner_navbar .menu ul li .search-form:first-child{
+    width: 100%;
+  }
+
+
+  .navbar .inner_navbar .menu .search-form input[type="search"],
+  .navbar .inner_navbar .menu .search-form button {
+    display: inline-block;
+  }
+
+
+}
+
+
+.navbar .menu ul {
+  display: flex;
+  padding-top: 1px;
+  justify-content: flex-end;
+}
+
+
+.navbar .menu ul li a {
+  width: 120px;
+  margin-right: 5px;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+}
+
+
+
+
+
+.navbar .menu ul li:last-child a {
+  margin-right: 0;
+}
+
+.navbar .menu ul li a:hover,
+.navbar .menu ul li a.active{
+  background: #1fa2a0;
+}
+
+
+
+
+@media (max-width: 880px){
+
+  .navbar .inner_navbar .menu .search-form input[type="search"],
+  .navbar .inner_navbar .menu .search-form button {
+    display: inline-block;
+
+  }
+  .navbar .inner_navbar .menu .search-form input[type="search"]{
+    width: 400px;
+  }
+
+
+
+
+  .navbar .inner_navbar{
+    flex-direction: row;
+  }
+  .main_container{
+    margin-top: 60px;
+  }
+  .navbar .menu ul{
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background: #111a2f;
+
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .navbar .menu ul li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+
+  .navbar .menu{
+    display: none;
+  }
+  .navbar .menu.active{
+    display: block;
+  }
+  .main_container .content .item_wrap{
+    width: 100%;
+  }
+}
+
+
+
+input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  border: none;
+  margin-bottom: 8px;
+  font: 16px system-ui;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 25px;
+}
+
+.wrapper .navbar .inner_navbar .menu ul li .search-form button{
+  padding-left: 5px;
+  padding-right: 15px;
+  padding-bottom: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 12px;
+}
+
+
+input[type="search"] {
+  padding: 8px;
+  border: none;
+  width: 500px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+}
+::placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.inner_navbar {
+  display: flex;
+  /*align-items: center;*/
+}
+
+.menu {
+  flex-grow: 1;
+}
+
+#form {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+svg {
+  fill: #fff;
+  height: 24px;
+  width: 30px;
+}
+
+/* Adjust the size and color of the search button icon */
+.path1 {
+  fill: #fff;
+  width: 16px;
+  height: 16px;
+}
+
+/* Adjust the search bar styling when focused */
+input[type="search"]:focus {
+  outline: none;
+  border: 0 solid #fff;
+  box-shadow: 0 0 5px rgb(40, 201, 165);
+  width: 500px;
+  background-color: rgba(162, 159, 159, 0.5);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+
+input[type="search"]:not(.empty) {
+  outline: none;
+  border: 0 solid #fff;
+  width: 500px;
+  background-color: rgba(162, 159, 159, 0.5);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+
+
+

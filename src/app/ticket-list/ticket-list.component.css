@@ -1,0 +1,110 @@
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 1100px;
+  width: 100%;
+  padding-left: 292px;
+  margin-top: 200px;
+  box-sizing: border-box;
+
+}
+
+@media (max-width: 768px) {
+  #content {
+    width: 100%;
+    padding-left: 0;
+    transition: all 0.1s ease;
+
+  }
+}
+
+#posts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.post-summary {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right:10px ;
+  width: 100%; /* Reduced height */
+}
+
+.post-summary-content {
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.post-summary-content-title a {
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.post-summary-content-description {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.post-summary-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-summary-meta-tags {
+  margin-right: 10px;
+}
+
+.post-tag-list-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-tag-list-item {
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.label {
+  display: inline-block;
+  background-color: #1fa2a0;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 2px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.user-card-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-card-info-username a {
+  color: #1fa2a0;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.user-card-time {
+  color: #777;
+  font-size: 12px;
+}
+
+.relativetime {
+  font-style: italic;
+}
