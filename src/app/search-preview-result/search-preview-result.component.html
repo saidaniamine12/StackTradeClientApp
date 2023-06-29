@@ -4,7 +4,7 @@
     <div id="post-summary" class="post-summary">
       <div class="post-summary-content">
         <h3 class="post-summary-content-title">
-          <a href="javascript:void(0)" routerLink="/question/{{ticket.id}}">{{ticket.summary}}</a>
+          <a href="javascript:void(0)" routerLink="/tickets/{{ticket.id}}">{{ticket.summary}}</a>
         </h3>
         <div class="post-summary-content-desciption" >
           {{ticket.description | maxLength: 200}}

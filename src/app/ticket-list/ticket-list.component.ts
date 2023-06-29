@@ -2,6 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {TicketListItem} from "../models/TicketListItem";
 import {User} from "../models/User";
 import {tick} from "@angular/core/testing";
+import {SearchService} from "../services/search/search.service";
 
 // Define a Question class
 
@@ -13,43 +14,35 @@ import {tick} from "@angular/core/testing";
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnDestroy, OnInit {
+  ticketList: TicketListItem[] = [];
 
-  constructor() {
+
+  constructor(private searchService: SearchService) {
   }
 
 
-  // Array of tickets
-  ticketList: TicketListItem[] = [
-    new TicketListItem(
-      "1",
-      "tag1",
-      "Sample Ticket 1",
-      "This is a sample ticket description 1.",
-      new Date(new Date("2023-06-23")),
-      "John Doe",
-      "john.Doe"
-    ),
-    new TicketListItem(
-      "2",
-      "tag3",
-      "Sample Ticket 2",
-      "This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.This is a sample ticket description 2.",
-      new Date("2023-06-23"),
-       "Jane Smith", "janesmith@example.com"
-    ),
-    new TicketListItem(
-      "3",
-      "tag5",
-      "Sample Ticket 3",
-      "This is a sample ticket description 3.",
-      new Date("2023-06-23"),
-      "Mike Johnson", "mikejohnson@example.com"
-    )
-  ];
+
   ngOnInit() {
+    //get the list of tickets from the search service
+    this.searchService.getLatestTickets().subscribe(
+      response => {
+        // Handle the search response from the backend
+        console.log('returned response');
+        console.log(response);
+        if (response) {
+          this.ticketList = TicketListItem.mapResponseToTicketList(response);
+          console.log(this.ticketList);
+        }
+      }
+    )
+
   }
   ngOnDestroy() {
   }
+
+
+
+
 
   @HostListener('window:resize')
   onWindowResize() {
@@ -64,7 +57,7 @@ export class TicketListComponent implements OnDestroy, OnInit {
   updateDivWidth(): void {
     const contentDiv = document.getElementById('content');
     if (contentDiv) {
-      contentDiv.style.width = this.getWindowWidth()-40 + 'px';
+      contentDiv.style.width = this.getWindowWidth()-55 + 'px';
     }
   }
 

@@ -8,13 +8,17 @@ import {TicketListItem} from "../../models/TicketListItem";
 })
 export class SearchService {
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/tickets';
 
   constructor(private http: HttpClient) {}
 
-  search(query: string): Observable<any> {
-    console.log('searching..... + '+query);
+  textSearch(query: string): Observable<any> {
     const url = `${this.baseUrl}/search?query=${encodeURIComponent(query)}`;
+    return this.http.get(url);
+  }
+  //get the list of tickets from the search service
+  getLatestTickets(): Observable<any> {
+    const url = `${this.baseUrl}/latest`;
     return this.http.get(url);
   }
 }

@@ -19,12 +19,7 @@ export class SearchPreviewResultComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      console.log("params")
-      console.log(params);
-      //this.searchResult = JSON.parse(params['searchResult']);
-      console.log("searchResult");
-      //console.log(this.searchResult);
-      this.searchService.search(params['query'])
+      this.searchService.textSearch(params['query'])
         .subscribe(
           response => {
             // Handle the search response from the backend
@@ -62,7 +57,7 @@ export class SearchPreviewResultComponent implements OnInit{
   updateDivWidth(): void {
     const contentDiv = document.getElementById('content');
     if (contentDiv) {
-      contentDiv.style.width = this.getWindowWidth()-40 + 'px';
+      contentDiv.style.width = this.getWindowWidth()-55 + 'px';
     }
   }
 }
