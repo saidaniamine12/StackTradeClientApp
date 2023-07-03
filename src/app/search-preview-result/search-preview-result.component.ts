@@ -23,7 +23,6 @@ export class SearchPreviewResultComponent implements OnInit{
         .subscribe(
           response => {
             // Handle the search response from the backend
-            console.log('im here');
             console.log(response);
             if (response) {
               this.ticketList = TicketListItem.mapResponseToTicketList(response);

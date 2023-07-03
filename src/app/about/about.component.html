@@ -2,8 +2,12 @@
 <p>about works!!!!!!</p>
 <p>about works!</p>
 <p>about works!</p>
-<p>about works!</p>
-<p>about works!</p>
-<p>about works!</p>
-<p>about works!</p>
-<p>about works!</p>
+<p  > about works!</p>
+<p [hidden]="isValid" >about worksbh! {{myName}} </p>
+<p  >about works! {{secondName}} </p>
+
+<button (click)="onClickEvent()">Get Products</button>
+<input placeholder="Product name"
+       [formControl]="searchInput"
+>
+<h3>{{weather}}</h3>

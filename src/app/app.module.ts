@@ -13,9 +13,11 @@ import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { FooterComponent } from './footer/footer.component';
 import {MaxLengthPipe} from "./pipes/max-length.pipe";
 
-import { SearchService } from './services/search/search.service';
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http"; // Import the SearchService
+import { SearchService } from './services/search/search.service';// Import the SearchService
+import  {NgxPaginationModule} from 'ngx-pagination'; // Import the  ngx-pagination module
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,10 @@ import {HttpClientModule} from "@angular/common/http"; // Import the SearchServi
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [
     SearchService // Add the SearchService to the providers array

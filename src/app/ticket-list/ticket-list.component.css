@@ -108,3 +108,9 @@
 .relativetime {
   font-style: italic;
 }
+
+
+.custom-pagination ::ng-deep .ngx-pagination .current{
+  background-color: #1fa2a0;
+}
+

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -16,8 +16,11 @@ export class SearchService {
     return this.http.get(url);
   }
   //get the list of tickets from the search service
-  getLatestTickets(): Observable<any> {
+    getLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<any> {
+      const params = new HttpParams()
+        .set('pageNumber', pageNumber.toString())
+        .set('ticketsPerPage', ticketsPerPage.toString());
     const url = `${this.baseUrl}/latest`;
-    return this.http.get(url);
+    return this.http.get(url, {params});
   }
 }
