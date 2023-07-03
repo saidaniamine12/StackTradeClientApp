@@ -31,56 +31,25 @@ export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
 
   set pageNumber(value: number) {
     this._pageNumber = value;
-    this.searchService.getLatestTickets(this._pageNumber, this.ticketsPerPage).subscribe(
+    //get the list of tickets from the search service
+    this.searchService.fetchLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
       response => {
         // Handle the search response from the backend
-        console.log('returned response');
-        console.log(response);
-        const searchEntities = response.searchEntities;
         const totalHits = response.totalHits;
-
-        console.log(searchEntities);
-        console.log('total items');
-        console.log(this.totalItems);
-        console.log(totalHits);
-
-        if(totalHits !== undefined && totalHits !== null && totalHits > 0){
-          this.totalItems = totalHits;
-        }
-
-        if (searchEntities !==undefined && searchEntities !== null && searchEntities.length > 0 ) {
-          this.ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
-        }
-
-
+        this.totalItems = response.totalHits;
+        this.ticketList = response.searchEntities;
       }
     )
   }
 
   ngOnInit() {
     //get the list of tickets from the search service
-    this.searchService.getLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
+    this.searchService.fetchLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
       response => {
         // Handle the search response from the backend
-        console.log('returned response');
-        console.log(response);
-        const searchEntities = response.searchEntities;
         const totalHits = response.totalHits;
-
-        console.log(searchEntities);
-        console.log('total items');
-        console.log(this.totalItems);
-        console.log(totalHits);
-
-        if(totalHits !== undefined && totalHits !== null && totalHits > 0){
-          this.totalItems = totalHits;
-        }
-
-        if (searchEntities !==undefined && searchEntities !== null && searchEntities.length > 0 ) {
-          this.ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
-        }
-
-
+          this.totalItems = response.totalHits;
+          this.ticketList = response.searchEntities;
       }
     )
 

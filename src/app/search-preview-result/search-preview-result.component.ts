@@ -12,6 +12,9 @@ import {SearchService} from "../services/search/search.service";
 export class SearchPreviewResultComponent implements OnInit{
   //get the list of tickets from the search service
   ticketList: TicketListItem[] = [];
+  private _pageNumber: number = 1;
+  ticketsPerPage: number = 23;
+  totalItems: number = 10;
 
 
   constructor(private route: ActivatedRoute,
@@ -37,8 +40,35 @@ export class SearchPreviewResultComponent implements OnInit{
     });
   }
 
+  get pageNumber(): number {
+    return this._pageNumber;
+  }
 
+  set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.searchService.getLatestTickets(this._pageNumber, this.ticketsPerPage).subscribe(
+      response => {
+        // Handle the search response from the backend
+        console.log('returned response');
+        console.log(response);
+        const searchEntities = response.searchEntities;
+        const totalHits = response.totalHits;
 
+        if(totalHits !== undefined && totalHits !== null && totalHits > 0){
+          this.totalItems = totalHits;
+        }
+
+        if (searchEntities !==undefined && searchEntities !== null && searchEntities.length > 0 ) {
+          this.ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
+        }
+
+      }
+    )
+  }
+
+  get maxPages(): number {
+    return 7;
+  }
 
   ngOnDestroy() {
   }
