@@ -108,3 +108,48 @@
 .relativetime {
   font-style: italic;
 }
+
+.custom-pagination ::ng-deep .ngx-pagination .current{
+  background-color: #1fa2a0;
+}
+
+
+.custom-pagination ::ng-deep  {
+
+  margin-right: 90px;
+
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items:flex-end;
+}
+
+.pagination-options {
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
+
+.pagination-options span {
+  margin-right: 10px;
+}
+
+.pagination-options button {
+  padding: 4px 8px;
+  margin-left: 5px;
+  background-color: #ffffff;
+  border: 1px solid rgba(162, 159, 159, 0.5);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-options button:hover {
+  background-color: rgba(229, 222, 222, 0.5);
+}
+
+.pagination-options button.active {
+  background-color: #1fa2a0;
+  color: #ffffff;
+}
+

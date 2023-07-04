@@ -17,12 +17,20 @@ import {FormControl} from "@angular/forms";
 export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
   ticketList: TicketListItem[] = [];
   private _pageNumber: number = 1;
-  ticketsPerPage: number = 23;
-  totalItems: number = 10;
+  ticketsPerPage: number = 15;
+  totalHits: number = 10;
 
 
 
   constructor(private searchService: SearchService) {
+  }
+
+
+  changePageSize(size: number) {
+    this.ticketsPerPage = size;
+    // Fetch data based on the new page size
+    console.log('New page size:', this.ticketsPerPage);
+    this.updateData();
   }
 
   get pageNumber(): number {
@@ -32,27 +40,25 @@ export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
   set pageNumber(value: number) {
     this._pageNumber = value;
     //get the list of tickets from the search service
-    this.searchService.fetchLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
-      response => {
-        // Handle the search response from the backend
-        const totalHits = response.totalHits;
-        this.totalItems = response.totalHits;
-        this.ticketList = response.searchEntities;
-      }
-    )
+    this.updateData()
   }
 
   ngOnInit() {
     //get the list of tickets from the search service
+    this.updateData();
+
+  }
+
+  //update the data when the page number changes
+  updateData(): void {
     this.searchService.fetchLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
       response => {
         // Handle the search response from the backend
-        const totalHits = response.totalHits;
-          this.totalItems = response.totalHits;
-          this.ticketList = response.searchEntities;
+        this.totalHits = response.totalHits;
+        this.ticketList = response.searchEntities;
       }
     )
-
+    document.documentElement.scrollTop = 0;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(this.pageNumber){
@@ -95,7 +101,6 @@ export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
     }
   }
 
-  protected readonly tick = tick;
 
 
 }

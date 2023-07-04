@@ -13,10 +13,40 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  textSearch(query: string): Observable<any> {
+  textSearch(query: string,pageNumber: number, ticketsPerPage: number): Observable<any> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('ticketsPerPage', ticketsPerPage.toString());
     const url = `${this.baseUrl}/search?query=${encodeURIComponent(query)}`;
-    return this.http.get(url);
+    return this.http.get(url, {params});
   }
+
+
+  fetchTextSearch(query: string, pageNumber: number, ticketsPerPage: number): Observable<{
+    searchEntities: TicketListItem[];
+    totalHits: any
+  } | { searchEntities: any[]; totalHits: number }> {
+    return this.textSearch(query, pageNumber, ticketsPerPage).pipe(
+      map(response => {
+        console.log('returned response');
+        console.log(response);
+        const searchEntities = response.searchEntities;
+        const totalHits = response.totalHits;
+
+        if (totalHits !== undefined && totalHits !== null && totalHits > 0) {
+          if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
+            const ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
+            return { searchEntities: ticketList, totalHits: totalHits };
+          }
+        }
+
+        // Return an empty response if no tickets are found
+        return { searchEntities: [], totalHits: 0 };
+      })
+    );
+  }
+
+
   //get the list of tickets from the search service
   getLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<any> {
       const params = new HttpParams()
@@ -25,6 +55,8 @@ export class SearchService {
       const url = `${this.baseUrl}/latest`;
     return this.http.get(url, {params});
   }
+
+
 
   // @ts-ignore
   fetchLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<{
