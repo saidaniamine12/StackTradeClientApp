@@ -53,6 +53,8 @@ export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
   updateData(): void {
     this.searchService.fetchLatestTickets(this.pageNumber, this.ticketsPerPage).subscribe(
       response => {
+        console.log('response from updateData');
+        console.log(response)
         // Handle the search response from the backend
         this.totalHits = response.totalHits;
         this.ticketList = response.searchEntities;

@@ -13,12 +13,12 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  textSearch(query: string,pageNumber: number, ticketsPerPage: number): Observable<any> {
+  textSearch(query: string,pageNumber: number, ticketsPerPage: number): Observable<SearchResponse> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('ticketsPerPage', ticketsPerPage.toString());
     const url = `${this.baseUrl}/search?query=${encodeURIComponent(query)}`;
-    return this.http.get(url, {params});
+    return this.http.get(url, {params}) as Observable<SearchResponse>;
   }
 
 
@@ -36,6 +36,8 @@ export class SearchService {
         if (totalHits !== undefined && totalHits !== null && totalHits > 0) {
           if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
             const ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
+            console.log('ticketList');
+            console.log(ticketList);
             return { searchEntities: ticketList, totalHits: totalHits };
           }
         }
@@ -48,12 +50,12 @@ export class SearchService {
 
 
   //get the list of tickets from the search service
-  getLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<any> {
+  getLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<SearchResponse> {
       const params = new HttpParams()
         .set('pageNumber', pageNumber.toString())
         .set('ticketsPerPage', ticketsPerPage.toString());
       const url = `${this.baseUrl}/latest`;
-    return this.http.get(url, {params});
+    return this.http.get(url, {params}) as Observable<SearchResponse>;
   }
 
 
