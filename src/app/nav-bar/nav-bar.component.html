@@ -20,8 +20,8 @@
               </button>
             </form>
           </li>
-          <li><a routerLink="/tickets" routerLinkActive="active">Tickets</a></li>
-          <li><a routerLink="/about" routerLinkActive="active">About Us</a></li>
+          <li><button class="field" [class.selected]="selectedField === 'Summary'" (click)="searchField('Summary')">On Summary</button></li>
+          <li><button class="field" [class.selected]="selectedField === 'Description'" (click)="searchField('Description')">On Description</button></li>
         </ul>
       </div>
     </div>

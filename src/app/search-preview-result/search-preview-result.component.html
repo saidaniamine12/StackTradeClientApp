@@ -1,7 +1,7 @@
 
 <div id="content" [ngStyle]="{ width: getWindowWidth()  }" >
   <div id="posts" class=" flush-left" *ngFor="let ticket of ticketList |
-   paginate: { itemsPerPage:ticketsPerPage, currentPage: pageNumber,totalItems: totalHits } ">
+   paginate: { itemsPerPage:ticketsPerPage, currentPage: pageNumber } ">
     <div id="post-summary" class="post-summary">
       <div class="post-summary-content">
         <h3 class="post-summary-content-title">
@@ -36,9 +36,10 @@
   </div>
 
   <div class="pagination-container">
-    <pagination-controls class="custom-pagination" [maxSize]="maxPages" (pageChange)="pageNumber = $event"></pagination-controls>
     <div class="pagination-options">
-      <button (click)="changePageSize(15)" [class.active]="ticketsPerPage === 15">15</button>
+
+      <button (click)="changePageSize(10)" [class.active]="ticketsPerPage === 15">10</button>
+      <button (click)="changePageSize(20)" [class.active]="ticketsPerPage === 15">20</button>
       <button (click)="changePageSize(30)" [class.active]="ticketsPerPage === 30">30</button>
       <button (click)="changePageSize(50)" [class.active]="ticketsPerPage === 50">50</button>
       <span style="margin-left: 10px;">per page</span>

@@ -1,6 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {TicketListItem} from "../models/TicketListItem";
-import {User} from "../models/User";
 import {ActivatedRoute} from "@angular/router";
 import {SearchService} from "../services/search/search.service";
 
@@ -11,11 +10,11 @@ import {SearchService} from "../services/search/search.service";
 })
 export class SearchPreviewResultComponent implements OnInit{
   //get the list of tickets from the search service
-  ticketList: TicketListItem[] = [];
+  ticketList:TicketListItem[] = [];
   private _pageNumber: number = 1;
-  ticketsPerPage: number = 15;
-  totalHits: number = 10;
+  ticketsPerPage: number = 10;
   searchQuery: string = '';
+  selectedField: string = 'All';
 
 
   constructor(private route: ActivatedRoute,
@@ -25,18 +24,17 @@ export class SearchPreviewResultComponent implements OnInit{
     this.route.queryParams.subscribe(params => {
       this._pageNumber = 1;
       this.searchQuery = params['query'];
+      this.selectedField = params['selectedField'];
       this.updateData();
     });
   }
 
   //update the data when the page number changes
   updateData(): void {
-    this.searchService.fetchTextSearch(this.searchQuery, this.pageNumber, this.ticketsPerPage)
+    this.searchService.fetchTextSearch(this.searchQuery,this.selectedField, this.ticketsPerPage)
       .subscribe(
         response => {
-          // Handle the search response from the backend
-          this.totalHits = response.totalHits;
-          this.ticketList = response.searchEntities;
+          this.ticketList = response;
         }
       );
     document.documentElement.scrollTop = 0;

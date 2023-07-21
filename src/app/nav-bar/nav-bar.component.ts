@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 })
 export class NavBarComponent {
   @Input() searchQuery: string = '';
+  selectedField: string = 'All';
 
 
   constructor(
@@ -16,9 +17,27 @@ export class NavBarComponent {
 
   search(): void {
     console.log(this.searchQuery);
-    this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
+    this.router.navigate(['/search'], {
+      queryParams: {
+        query: this.searchQuery,
+        selectedField: this.selectedField
+      }
+    });
+    console.log(this.selectedField);
 
   }
+
+  navigateToSearch() {
+    this.selectedField = 'All';
+    console.log(this.selectedField);
+    };
+
+  searchField(field: string) {
+    this.selectedField = this.selectedField === field ? 'All' : field;
+    console.log(this.selectedField);
+    this.search();
+  }
+
 
   ngOnInit(): void {
   }

@@ -13,12 +13,12 @@ export class TicketListItem {
 
   static mapResponseToTicketList(response: any[]): TicketListItem[] {
     return response.map(ticket => new TicketListItem(
-      ticket.id,
-      ticket.summary,
+      ticket.id ,
+      ticket.summary ?? "",
       ticket.projectName,
-      ticket.description,
-      new Date(ticket.created),
-      ticket.creatorName,
+      ticket.description ?? "",
+      new Date(ticket.created) ?? "",
+      ticket.creatorName ?? "",
       ticket.creatorEmailAddress
     ));
   }

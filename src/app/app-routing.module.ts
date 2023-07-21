@@ -10,7 +10,7 @@ import {TicketComponent} from "./ticket/ticket.component";
 
 // Define your routes
 const routes: Routes = [
-  { path: '', component: TicketListComponent },
+  { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'search', component: SearchPreviewResultComponent },
   { path: 'home', component: HomeComponent },
