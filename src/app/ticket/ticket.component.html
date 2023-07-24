@@ -1,21 +1,9 @@
-<div class="ticket-container">
-  <h1 class="ticket-title">Jira Ticket</h1>
+<div class="ticket-container" >
+  <h1 class="ticket-title">{{ticket?.summary}}</h1>
   <div class="ticket-details">
     <div class="field">
-      <label for="ticket-id">Ticket ID:</label>
-      <span id="ticket-id">TICKET-123</span>
-    </div>
-    <div class="field">
-      <label for="summary">Summary:</label>
-      <span id="summary">Example Jira Ticket</span>
-    </div>
-    <div class="field">
-      <label for="assignee">Assignee:</label>
-      <span id="assignee">John Doe</span>
-    </div>
-    <div class="field">
       <label for="description">Description:</label>
-      <span id="description">This is an example Jira ticket for demonstration purposes.</span>
+      <span id="description">{{ticket?.description}}</span>
     </div>
   </div>
 </div>

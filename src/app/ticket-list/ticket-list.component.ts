@@ -1,5 +1,5 @@
 import {Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {TicketListItem} from "../models/TicketListItem";
+import {Ticket} from "../models/Ticket";
 import {User} from "../models/User";
 import {tick} from "@angular/core/testing";
 import {SearchService} from "../services/search/search.service";
@@ -15,7 +15,7 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
-  ticketList: TicketListItem[] = [];
+  ticketList: Ticket[] = [];
   private _pageNumber: number = 1;
   ticketsPerPage: number = 15;
   totalHits: number = 10;

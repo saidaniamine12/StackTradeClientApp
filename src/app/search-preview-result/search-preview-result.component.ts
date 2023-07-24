@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {TicketListItem} from "../models/TicketListItem";
+import {Ticket} from "../models/Ticket";
 import {ActivatedRoute} from "@angular/router";
 import {SearchService} from "../services/search/search.service";
 
@@ -10,7 +10,7 @@ import {SearchService} from "../services/search/search.service";
 })
 export class SearchPreviewResultComponent implements OnInit{
   //get the list of tickets from the search service
-  ticketList:TicketListItem[] = [];
+  ticketList:Ticket[] = [];
   private _pageNumber: number = 1;
   ticketsPerPage: number = 10;
   searchQuery: string = '';

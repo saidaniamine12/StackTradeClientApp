@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {TicketListItem} from "../../models/TicketListItem";
+import {Ticket} from "../../models/Ticket";
 import {SearchResponse} from "../../models/SearchResponse";
 
 @Injectable({
@@ -13,23 +13,30 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  textSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<TicketListItem[]> {
+
+  //get ticket by id
+  getTicketById(id: string): Observable<Ticket> {
+    const url = `${this.baseUrl}/ticket/${id}`;
+    return this.http.get(url) as Observable<Ticket>;
+  }
+
+  textSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<Ticket[]> {
     const params = new HttpParams()
       .set('ticketsPerPage', ticketsPerPage.toString())
       .set('selectedField', selectedField);
     const url = `${this.baseUrl}/search?query=${encodeURIComponent(query)}`;
-    return this.http.get(url, {params}) as Observable<TicketListItem[]>;
+    return this.http.get(url, {params}) as Observable<Ticket[]>;
   }
 
 
-  fetchTextSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<TicketListItem[]> {
+  fetchTextSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<Ticket[]> {
     return this.textSearch(query,selectedField, ticketsPerPage).pipe(
       map(response => {
         console.log('returned response');
         console.log(response);
         const searchEntities = response;
           if (searchEntities !== undefined && searchEntities !== null  && searchEntities.length > 0) {
-            const ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
+            const ticketList = Ticket.mapResponseToTicketList(searchEntities);
             return ticketList;
           }
 
@@ -53,7 +60,7 @@ export class SearchService {
 
   // @ts-ignore
   fetchLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<{
-    searchEntities: TicketListItem[];
+    searchEntities: Ticket[];
     totalHits: any
   } | { searchEntities: any[]; totalHits: number }> {
     return this.getLatestTickets(pageNumber, ticketsPerPage).pipe(
@@ -65,7 +72,7 @@ export class SearchService {
 
         if (totalHits !== undefined && totalHits !== null && totalHits > 0) {
           if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
-            const ticketList = TicketListItem.mapResponseToTicketList(searchEntities);
+            const ticketList = Ticket.mapResponseToTicketList(searchEntities);
             return { searchEntities: ticketList, totalHits: totalHits };
           }
         }

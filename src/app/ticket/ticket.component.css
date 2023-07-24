@@ -1,5 +1,5 @@
 .ticket-container {
-  max-width: 400px;
+  max-width: 700px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -8,6 +8,7 @@
 
 .ticket-title {
   text-align: center;
+  font-size: 24px;
 }
 
 .field {

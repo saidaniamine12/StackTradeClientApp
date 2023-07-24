@@ -1,8 +1,8 @@
-import {TicketListItem} from "./TicketListItem";
+import {Ticket} from "./Ticket";
 
 export class SearchResponse {
   constructor(
-    public searchEntities: TicketListItem[],
+    public searchEntities: Ticket[],
     public totalHits: number,
   ) {}
 }
