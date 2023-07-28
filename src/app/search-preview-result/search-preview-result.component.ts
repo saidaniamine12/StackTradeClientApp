@@ -11,18 +11,15 @@ import {SearchService} from "../services/search/search.service";
 export class SearchPreviewResultComponent implements OnInit{
   //get the list of tickets from the search service
   ticketList:Ticket[] = [];
-  private _pageNumber: number = 1;
   ticketsPerPage: number = 10;
   searchQuery: string = '';
   selectedField: string = 'All';
-
 
   constructor(private route: ActivatedRoute,
               private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this._pageNumber = 1;
       this.searchQuery = params['query'];
       this.selectedField = params['selectedField'];
       this.updateData();
@@ -40,20 +37,9 @@ export class SearchPreviewResultComponent implements OnInit{
     document.documentElement.scrollTop = 0;
   }
 
-  set pageNumber(value: number) {
-    this._pageNumber = value;
-    //get the list of tickets from the search service
-    this.updateData()
-  }
-
-  get pageNumber(): number {
-    return this._pageNumber;
-  }
 
   changePageSize(size: number) {
     this.ticketsPerPage = size;
-    // Fetch data based on the new page size
-    console.log('New page size:', this.ticketsPerPage);
     this.updateData();
   }
 

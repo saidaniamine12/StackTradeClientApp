@@ -17,11 +17,15 @@ export class TicketComponent implements OnInit{
     }
 
     ngOnInit(): void {
-      this.route.params.subscribe(params => {
-        let ticketId = params['id'];
+      this.route.params.subscribe(result => {
+        let ticketId = result['id'];
         this.searchService.getTicketById(ticketId).subscribe( ticket => {
           this.ticket = ticket;
-        });
+        },
+          error => {
+            console.log(error.error)
+          }
+        );
       });
 
     }

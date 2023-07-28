@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Ticket} from "../../models/Ticket";
@@ -36,8 +36,7 @@ export class SearchService {
         console.log(response);
         const searchEntities = response;
           if (searchEntities !== undefined && searchEntities !== null  && searchEntities.length > 0) {
-            const ticketList = Ticket.mapResponseToTicketList(searchEntities);
-            return ticketList;
+            return Ticket.mapResponseToTicketList(searchEntities);
           }
 
         // Return an empty response if no tickets are found
