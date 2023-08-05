@@ -21,6 +21,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import {AuthService} from "./auth/auth.service";
 import {AuthInterceptorService} from "./auth/auth-intercepter-service/auth-interceptor.service";
+import {UserService} from "./services/user-service/user.service";
 
 @NgModule({
   declarations: [
@@ -48,8 +49,9 @@ import {AuthInterceptorService} from "./auth/auth-intercepter-service/auth-inter
 
   ],
   providers: [
-    SearchService, // Add the SearchService to the providers array
-    AuthService, // Add the AuthService to the providers array
+    SearchService,
+    AuthService,
+    UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,

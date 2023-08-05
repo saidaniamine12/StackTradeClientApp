@@ -3,6 +3,7 @@ import {BehaviorSubject, delay, distinctUntilChanged, map, Observable, of, tap} 
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "../models/User";
+import {AuthInterceptorService} from "./auth-intercepter-service/auth-interceptor.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   private apiUrl = 'https://localhost:8443/api/auth'; // Replace with your actual API URL
   private currentUserSubject = new BehaviorSubject<User |null> (null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-  isLoggedIn = this.currentUser.pipe(map(user => !!user));
+  isAuthenticated = this.currentUser.pipe(map(user => !!user));
   constructor(private http: HttpClient,
               private router: Router) {
   }
@@ -59,4 +60,12 @@ export class AuthService {
     return this.redirectUrl;
   }
 
+  setAuth(user: User): void {
+    this.currentUserSubject.next(user);
+  }
+
+  purgeAuth(): void {
+    AuthInterceptorService.accessToken = '';
+    this.currentUserSubject.next(null);
+  }
 }
