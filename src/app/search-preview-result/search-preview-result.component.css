@@ -20,7 +20,6 @@
 
 #posts {
   width: 60%;
-  transition: width 1s linear;
 }
 
 .post-summary {

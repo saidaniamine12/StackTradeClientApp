@@ -16,7 +16,11 @@ import {MaxLengthPipe} from "./pipes/max-length.pipe";
 import { SearchService } from './services/search/search.service';// Import the SearchService
 import  {NgxPaginationModule} from 'ngx-pagination'; // Import the  ngx-pagination module
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import {AuthService} from "./auth/auth.service";
+import {AuthInterceptorService} from "./auth/auth-intercepter-service/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -30,6 +34,8 @@ import {HttpClientModule} from "@angular/common/http";
     TicketListComponent,
     FooterComponent,
     MaxLengthPipe,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +44,18 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+
   ],
   providers: [
-    SearchService // Add the SearchService to the providers array
+    SearchService, // Add the SearchService to the providers array
+    AuthService, // Add the AuthService to the providers array
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+
   ],
   bootstrap: [AppComponent]
 })

@@ -9,7 +9,7 @@ import {SearchResponse} from "../../models/SearchResponse";
 })
 export class SearchService {
 
-  private baseUrl = 'http://localhost:8080/tickets';
+  private baseUrl = 'https://localhost:8443/tickets';
 
   constructor(private http: HttpClient) {}
 
@@ -32,8 +32,6 @@ export class SearchService {
   fetchTextSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<Ticket[]> {
     return this.textSearch(query,selectedField, ticketsPerPage).pipe(
       map(response => {
-        console.log('returned response');
-        console.log(response);
         const searchEntities = response;
           if (searchEntities !== undefined && searchEntities !== null  && searchEntities.length > 0) {
             return Ticket.mapResponseToTicketList(searchEntities);
@@ -81,4 +79,5 @@ export class SearchService {
       })
     );
   }
+
 }

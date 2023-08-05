@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import { SearchService } from '../services/search/search.service';
 import {Router} from "@angular/router";
+import {AuthService} from "../auth/auth.service";
 
 
 const Fields = {
@@ -23,7 +24,8 @@ export class NavBarComponent {
 
   constructor(
     private searchService: SearchService,
-    private router: Router) { }
+    private router: Router,
+    private authService:AuthService) { }
 
   search(): void {
     console.log(this.searchQuery);
@@ -47,6 +49,10 @@ export class NavBarComponent {
 
   updateButtonState() {
     this.isValidInput = this.searchQuery.trim() !== '';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 

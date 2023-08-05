@@ -19,6 +19,7 @@ export class SearchPreviewResultComponent implements OnInit{
               private searchService: SearchService) { }
 
   ngOnInit(): void {
+    // this.ticketList = [];
     this.route.queryParams.subscribe(params => {
       this.searchQuery = params['query'];
       this.selectedField = params['selectedField'];
@@ -31,7 +32,15 @@ export class SearchPreviewResultComponent implements OnInit{
     this.searchService.fetchTextSearch(this.searchQuery,this.selectedField, this.ticketsPerPage)
       .subscribe(
         response => {
+          console.log("response");
+          console.log(response);
           this.ticketList = response;
+
+        },
+        error => {
+          console.log("error");
+          console.log(error);
+
         }
       );
     document.documentElement.scrollTop = 0;
