@@ -16,7 +16,8 @@ export class UserService {
 
   getCurrentUser(): Observable<any> {
 
-    return this.http.get<any>('https://localhost:8443/user/current')
+
+    return this.http.get<any>('https://localhost:8443/user/current', {withCredentials: true})
       .pipe(
         tap({
           next: ({ user}) => this.authService.setAuth(user),

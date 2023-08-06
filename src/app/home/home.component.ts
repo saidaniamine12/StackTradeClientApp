@@ -21,4 +21,18 @@ export class HomeComponent implements OnInit {
 
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
+  refresh() {
+    this.authService.refresh().subscribe(
+      (response:any) => {
+        AuthService.accessToken = response.accessToken;
+        console.log("refreshed token")
+        console.log(AuthService.accessToken);
+
+      }
+    );
+  }
 }

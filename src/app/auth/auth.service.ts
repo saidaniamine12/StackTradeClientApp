@@ -51,6 +51,7 @@ export class AuthService {
     const url = `${this.apiUrl}/logout`;
     this.http.post(url, {},{withCredentials:true}).subscribe(
       () => {
+        this.purgeAuth();
         this.router.navigate(['/login']);
       }
     );
@@ -72,5 +73,11 @@ export class AuthService {
   purgeAuth(): void {
     AuthService.accessToken = '';
     this.currentUserSubject.next(null);
+  }
+
+  refresh() {
+
+    const url = `${this.apiUrl}/refresh`;
+    return this.http.post(url, {});
   }
 }
