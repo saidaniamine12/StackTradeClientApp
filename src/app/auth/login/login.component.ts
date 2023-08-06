@@ -40,10 +40,14 @@ export class LoginComponent implements OnInit{
     console.log(formData);
     this.authService.login(formData).subscribe(
       response => {
-        console.log('Login successful:', response)
-        AuthInterceptorService.accessToken = response.accessToken;
+        console.log('Login successful:', response);
+        console.log("AuthInterceptorService.accessToken");
+        AuthService.accessToken = response.accessToken;
+        console.log(AuthService.accessToken);
         this.userService.getCurrentUser().subscribe(
           response => {
+            this.authService.setAuth(response);
+            console.log("response from getCurrentUser")
             console.log(response);
             this.router.navigate(['/home']);
           });
@@ -51,7 +55,7 @@ export class LoginComponent implements OnInit{
       },
       error => {
         console.error('Login failed:', error);
-        // Handle login error, show error message, etc.
+        this.authService.purgeAuth();
       }
     );
   }

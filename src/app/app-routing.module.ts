@@ -12,12 +12,12 @@ import {SignupComponent} from "./auth/signup/signup.component";
 import {LoginComponent} from "./auth/login/login.component";
 // Define your routes
 const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'about', component: AboutComponent ,canActivate: [authGuard]},
-  { path: 'search', component: SearchPreviewResultComponent },
-  { path: 'home', component: HomeComponent},
-  { path: 'tickets', component: TicketListComponent },
-  { path: 'tickets/:id', component: TicketComponent},
+  { path: '', component: HomeComponent, canActivate: [authGuard]},
+  { path: 'about', component: AboutComponent },
+  { path: 'search', component: SearchPreviewResultComponent, canActivate: [authGuard]},
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  { path: 'tickets', component: TicketListComponent, canActivate: [authGuard] },
+  { path: 'tickets/:id', component: TicketComponent, canActivate: [authGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
 

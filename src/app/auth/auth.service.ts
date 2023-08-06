@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, delay, distinctUntilChanged, map, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, catchError, delay, distinctUntilChanged, map, Observable, of, shareReplay, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "../models/User";
@@ -13,6 +13,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User |null> (null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   isAuthenticated = this.currentUser.pipe(map(user => !!user));
+  static accessToken: '';
   constructor(private http: HttpClient,
               private router: Router) {
   }
@@ -23,16 +24,20 @@ export class AuthService {
 
   // store the URL so we can redirect after logging in
   private redirectUrl: string | null = null;
-
   login(formData: any): Observable<any> {
     const url = `${this.apiUrl}/authenticate`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
 
-    // Create the options withCredentials set to true
-    const options = { headers, withCredentials: true };
-    return this.http.post(url, formData , options);
+    return this.http.post<any>(url, formData).pipe(
+      tap(response => {
+        AuthService.accessToken = response.token;
+
+      }),
+      catchError(error => {
+        console.log(error);
+        throw error;
+      }),
+      shareReplay(1)
+    );
   }
 
   registerUser(formData:any): Observable<any> {
@@ -65,7 +70,7 @@ export class AuthService {
   }
 
   purgeAuth(): void {
-    AuthInterceptorService.accessToken = '';
+    AuthService.accessToken = '';
     this.currentUserSubject.next(null);
   }
 }

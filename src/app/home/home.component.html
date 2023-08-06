@@ -1,0 +1,9 @@
+<li class="nav-item" *ngIf="currentUser$ | async as currentUser">
+  <a
+    class="nav-link"
+    [routerLink]="['/profile', currentUser.name]"
+    routerLinkActive="active"
+  >
+    {{ currentUser.name }}
+  </a>
+</li>
