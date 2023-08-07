@@ -1,7 +1,8 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserService} from "../services/user-service/user.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
+import {User} from "../models/User";
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import {AuthService} from "../auth/auth.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
 
   constructor(private router: Router,
               private userService: UserService,
@@ -32,4 +34,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+
+
 }

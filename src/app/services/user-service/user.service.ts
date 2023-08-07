@@ -26,4 +26,28 @@ export class UserService {
         shareReplay(1),
       );
   }
+
+  postDeleteUser() :Observable<any> {
+    return this.http.post<any>('https://localhost:8443/user/delete', {},{withCredentials: true})
+      .pipe(
+        tap({
+          next: ({ user}) => this.authService.setAuth(user),
+          error: () => this.authService.purgeAuth(),
+        }),
+        shareReplay(1),
+      );
+
+  }
+
+  postImgUrl(newImgUrl: string) :Observable<any> {
+    return this.http.post<any>('https://localhost:8443/user/imgUrl', {imgUrl: newImgUrl},{withCredentials: true})
+      .pipe(
+        tap({
+          next: ({ user}) => this.authService.setAuth(user),
+          error: () => this.authService.purgeAuth(),
+        }),
+        shareReplay(1),
+      );
+
+  }
 }

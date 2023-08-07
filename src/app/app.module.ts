@@ -22,6 +22,12 @@ import { SignupComponent } from './auth/signup/signup.component';
 import {AuthService} from "./auth/auth.service";
 import {AuthInterceptorService} from "./auth/auth-intercepter-service/auth-interceptor.service";
 import {UserService} from "./services/user-service/user.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +42,8 @@ import {UserService} from "./services/user-service/user.service";
     FooterComponent,
     MaxLengthPipe,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +53,10 @@ import {UserService} from "./services/user-service/user.service";
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
 
   ],
   providers: [

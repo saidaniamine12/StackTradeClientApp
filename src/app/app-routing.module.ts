@@ -10,6 +10,7 @@ import {TicketComponent} from "./ticket/ticket.component";
 import {authGuard} from "./auth/auth-guard/auth.guard";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {LoginComponent} from "./auth/login/login.component";
+import {UserProfileComponent} from "./user-profile/user-profile.component";
 // Define your routes
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard]},
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'tickets/:id', component: TicketComponent, canActivate: [authGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'user/:id', component: UserProfileComponent, canActivate: [authGuard] },
 
   // Add more routes as needed
 ];

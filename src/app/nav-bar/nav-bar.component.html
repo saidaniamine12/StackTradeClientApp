@@ -25,6 +25,18 @@
           </li>
           <li><button class="field" [class.selected]="selectedField === Fields.Summary" (click)="searchField(Fields.Summary)">On Summary</button></li>
           <li><button class="field" [class.selected]="selectedField === Fields.Description" (click)="searchField(Fields.Description)">On Description</button></li>
+          <li class="menu_btn">
+            <button class='field' mat-flat-button [matMenuTriggerFor]='appMenu'>
+              <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #appMenu='matMenu' [overlapTrigger]="false" xPosition="after" yPosition="below">
+              <div class="menu-items">
+                <button mat-menu-item routerLink="/user" routerLinkActive="active" (click)="loadUserProfile(currentUser.id)" *ngIf="currentUser$ | async as currentUser">Profile</button>
+                <button mat-menu-item routerLink="/logout" routerLinkActive="active" (click)="logout()">Log out</button>
+              </div>
+            </mat-menu>
+
+          </li>
         </ul>
       </div>
       <div class="signing-container" *ngIf="!(isAuthenticated$ | async)">

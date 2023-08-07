@@ -103,6 +103,8 @@
 }
 
 
+
+
 button.field.selected {
   background: #1fa2a0;
   /* Add any other desired styles */
@@ -291,8 +293,23 @@ input[type="search"]:not(.empty) {
 }
 
 /* Style for active link */
-.signing-container a:hover {
+.signing-container a:hover,
+button.mat-mdc-menu-trigger.field.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-unthemed.mat-mdc-button-base:hover {
   background: #1fa2a0;
   transition: ease 0.3s ;
+}
+
+
+
+button.mat-mdc-menu-trigger.field.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-unthemed.mat-mdc-button-base {
+  background-color: #111a2f;
+  padding-left: 18px;
+  margin-left: 100px;
+}
+
+
+body.mat-typography div.cdk-overlay-container div.cdk-overlay-connected-position-bounding-box div#cdk-overlay-0.cdk-overlay-pane {
+  margin-top: 30px;
+  position: absolute;
 
 }
