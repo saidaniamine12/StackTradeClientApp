@@ -5,7 +5,7 @@
         <a routerLink="/" routerLinkActive="active">Ticket<span>Search</span></a>
 
       </div>
-      <div class="menu">
+      <div class="menu" *ngIf="(isAuthenticated$ | async)">
         <ul>
           <li>
             <form class="search-form" role="search" id="form">
@@ -25,6 +25,12 @@
           </li>
           <li><button class="field" [class.selected]="selectedField === Fields.Summary" (click)="searchField(Fields.Summary)">On Summary</button></li>
           <li><button class="field" [class.selected]="selectedField === Fields.Description" (click)="searchField(Fields.Description)">On Description</button></li>
+        </ul>
+      </div>
+      <div class="signing-container" *ngIf="!(isAuthenticated$ | async)">
+        <ul>
+          <li><a *ngIf="!(showShowLogin$ | async)" routerLink="/login" routerLinkActive="active" > Log in</a></li>
+          <li><a  *ngIf="(showShowLogin$ | async)" routerLink="/signup" routerLinkActive="active">Sign up</a></li>
         </ul>
       </div>
     </div>

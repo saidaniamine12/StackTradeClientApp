@@ -1,6 +1,7 @@
 import {ActivatedRoute, ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import {inject} from "@angular/core";
 import {AuthService} from "../auth.service";
+import {map, tap} from "rxjs";
 
 
 //You could permit access only to authenticated users or to users with a specific role.
@@ -9,13 +10,18 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated){
-    //user is logged in so return true
-    console.log("user is logged in");
-    return true;
-  }
-  console.log("user is not logged in");
-  //not logged in , redirect to login page
-  router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-  return false;
+
+  return authService.isAuthenticated.pipe(
+    tap((isAuthenticated) => {
+      if (!isAuthenticated) {
+        console.log("not authenticated" + isAuthenticated)
+        router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      }
+    }),
+    map((isAuthenticated) => {
+      console.log("isAuthenticated"
+        + isAuthenticated);
+      return isAuthenticated; // Return true if authenticated, false if not
+    })
+  );
 };

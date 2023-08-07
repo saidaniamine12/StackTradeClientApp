@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import { SearchService } from '../services/search/search.service';
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
+import {filter, map, Observable, startWith} from "rxjs";
 
 
 const Fields = {
@@ -20,12 +21,26 @@ export class NavBarComponent {
   @Input() searchQuery: string = '';
   selectedField: string = Fields.All;
   isValidInput: boolean = false;
+  isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated;
+
+  readonly showShowLogin$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map(event => this.canShowLogin((event as NavigationEnd).urlAfterRedirects)),
+    startWith(this.canShowLogin(this.router.url))
+  );
+
 
 
   constructor(
     private searchService: SearchService,
     private router: Router,
     private authService:AuthService) { }
+
+  canShowLogin(url: string): boolean {
+    return ['/signup'].every((path) => !url.startsWith(path) );
+  }
+
+
 
   search(): void {
     console.log(this.searchQuery);

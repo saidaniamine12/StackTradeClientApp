@@ -261,3 +261,38 @@ input[type="search"]:not(.empty) {
   color: rgba(255, 255, 255, 0.84);
   font-size: 14px;
 }
+
+
+.signing-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px; /* Add some spacing from the right edge */
+  margin-bottom: 5px;
+}
+
+.signing-container ul {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Add spacing between the links */
+}
+
+.signing-container li {
+  font-size: 16px;
+}
+
+/* Add any additional styling you need for the links */
+.signing-container a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 12px;
+
+}
+
+/* Style for active link */
+.signing-container a:hover {
+  background: #1fa2a0;
+  transition: ease 0.3s ;
+
+}

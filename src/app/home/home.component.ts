@@ -29,9 +29,6 @@ export class HomeComponent implements OnInit {
     this.authService.refresh().subscribe(
       (response:any) => {
         AuthService.accessToken = response.accessToken;
-        console.log("refreshed token")
-        console.log(AuthService.accessToken);
-
       }
     );
   }
