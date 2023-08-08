@@ -5,9 +5,9 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest, HttpResponse
 } from "@angular/common/http";
-import {catchError, Observable, switchMap, throwError} from "rxjs";
+import {catchError, Observable, switchMap, tap, throwError} from "rxjs";
 import {AuthService} from "../auth.service";
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AuthInterceptorService implements HttpInterceptor{
   constructor(private http:HttpClient) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercepted')
+    console.log("intercept")
     const req = request.clone({
       setHeaders: {
         Authorization: `Bearer ${AuthService.accessToken}`,
@@ -27,35 +27,53 @@ export class AuthInterceptorService implements HttpInterceptor{
 
       }
     });
-    console.log('req')
-    console.log(req)
-    console.log(AuthService.accessToken);
     const xhr = req.clone({
       withCredentials: true
     });
-    console.log('req end clean')
-    return next.handle(xhr).pipe(catchError((err: HttpErrorResponse) => {
-      console.log('error' + err.status)
-      if (err.status === 401 && !this.refresh) {
-        this.refresh = true;
-        console.log('second refresh meaning not clean')
-        return this.http.post('https://localhost:8443/api/auth/refresh', {}, {withCredentials: true}).pipe(
-          switchMap((res: any) => {
-            console.log('token refreshed')
-            console.log(res.token)
-            console.log(AuthService.accessToken)
-            AuthService.accessToken = res.token;
-            return next.handle(xhr.clone({
-              setHeaders: {
-                Authorization: `Bearer ${AuthService.accessToken}`
+    return next.handle(xhr).pipe(
+      tap(
+        (event: HttpEvent<any>) => {
+          // Handle successful responses if needed
+          if (event instanceof HttpResponse && event.body) {
+            if (this.isValidResponse(event.body)) {
+              const response = event.body;
+              if (response.status === 401 && !this.refresh){
+                this.refresh = true;
+                this.http.post('https://localhost:8443/api/auth/refresh', {}, {withCredentials: true}).pipe(
+                  switchMap((res: any) => {
+                    AuthService.accessToken = res.accessToken ? res.accessToken : '';
+                    return next.handle(xhr.clone({
+                      setHeaders: {
+                        Authorization: `Bearer ${AuthService.accessToken}`
+                      }
+                    }));
+                  })
+                );
+
               }
-            }));
-          })
-        );
-      }
-      console.log('error end of line ')
-      this.refresh = false;
-      return throwError(() => err);
-    }));
+
+              // Handle the valid response here
+            }
+
+          }
+        },
+        (error: any) => {
+              throwError(() => error);
+        }
+      )
+    );
   }
+
+
+  isValidResponse(responseData: any): boolean {
+    // Implement your logic to validate the response format
+    // For example, check if responseData has the expected properties
+    return (
+      responseData.path &&
+      responseData.error &&
+      responseData.message &&
+      responseData.status
+    );
+  }
+
 }

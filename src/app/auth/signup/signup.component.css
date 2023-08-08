@@ -51,7 +51,7 @@ h1 {
   border-radius: 4px;
   outline: none;
   color: #000000;
-  font-family: 'sans-serif';
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .form-floating label {

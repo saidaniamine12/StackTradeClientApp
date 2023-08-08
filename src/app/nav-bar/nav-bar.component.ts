@@ -1,8 +1,9 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewChild, ViewEncapsulation} from '@angular/core';
 import {SearchService} from '../services/search/search.service';
 import {NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
 import {filter, map, Observable, startWith} from "rxjs";
+import {MatMenuTrigger} from "@angular/material/menu";
 
 
 const Fields = {
@@ -20,10 +21,12 @@ const Fields = {
 
 export class NavBarComponent {
   @Input() searchQuery: string = '';
+  // @ts-ignore
   selectedField: string = Fields.All;
   isValidInput: boolean = false;
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated;
   currentUser$ = this.authService.currentUser;
+
 
   readonly showShowLogin$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),

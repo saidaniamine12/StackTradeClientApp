@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 import {AuthService} from "../auth.service";
 import {FormBuilder} from "@angular/forms";
 import {AuthInterceptorService} from "../auth-intercepter-service/auth-interceptor.service";
@@ -13,6 +13,8 @@ import {UserService} from "../../services/user-service/user.service";
 })
 export class LoginComponent implements OnInit{
 
+  returnUrl: string ='';
+
   loginForm = this.formBuilder.group({
     email: '',
     password: ''
@@ -23,14 +25,14 @@ export class LoginComponent implements OnInit{
   constructor(public authService: AuthService,
               public router: Router,
               private formBuilder: FormBuilder,
-              private userService: UserService) {
+              private userService: UserService,
+              private activedRoute: ActivatedRoute) {
+    this.returnUrl = this.activedRoute.snapshot.queryParams['returnUrl'] || '/home';
   }
-  isAuthenticated$ = this.authService.isAuthenticated;
 
   ngOnInit(): void {
-    if(this.authService.isAuthenticated) {
-      this.router.navigate(['/home']);
-    }
+
+
   }
 
 

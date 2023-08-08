@@ -24,12 +24,14 @@ export class SearchPreviewResultComponent implements OnInit{
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
-
     this.route.queryParams.subscribe(params => {
-      this.searchQuery = params['query'];
-      this.selectedField = params['selectedField'];
-      this.updateData();
+      this.searchQuery = params['query'] ? params['query'] : '';
+      this.selectedField = params['selectedField'] ? params['selectedField'] : 'All';
+      if(this.searchQuery === '') {
+        return;
+      } else {
+        this.updateData();
+      }
     });
   }
 
@@ -37,13 +39,9 @@ export class SearchPreviewResultComponent implements OnInit{
   updateData(): void {
     this.ticketList = [];
     this.spinner.show();
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      //this.spinner.hide();
-
-    }, 1000);
     this.searchService.fetchTextSearch(this.searchQuery,this.selectedField, this.ticketsPerPage)
       .subscribe(
+
         response => {
           console.log("response");
           console.log(response);

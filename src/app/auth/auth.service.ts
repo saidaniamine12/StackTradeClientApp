@@ -13,7 +13,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User |null> (null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   isAuthenticated = this.currentUser.pipe(map(user => !!user));
-  static accessToken: '';
+  static accessToken: string =  '';
   constructor(private http: HttpClient,
               private router: Router) {
   }
@@ -80,9 +80,11 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  refresh() {
+  refresh(): Observable<any>   {
+
 
     const url = `${this.apiUrl}/refresh`;
-    return this.http.post(url, {});
+    return this.http.post(url, {}, {withCredentials: true});
   }
+
 }
