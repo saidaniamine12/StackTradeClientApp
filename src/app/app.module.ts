@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module'; // Import the AppRoutingModule
@@ -27,6 +27,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner-component";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MaxLengthPipe,
     LoginComponent,
     SignupComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +60,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    NgxSpinnerModule,
 
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     SearchService,
     AuthService,

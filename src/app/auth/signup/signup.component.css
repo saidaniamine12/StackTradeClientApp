@@ -16,7 +16,7 @@ h1 {
 }
 
 .login {
-  margin-top: -50px;
+  margin-top: -10px;
 }
 /* Styles for the login form container */
 .login-form {
@@ -50,6 +50,8 @@ h1 {
   border: 1px solid #ced4da;
   border-radius: 4px;
   outline: none;
+  color: #000000;
+  font-family: 'sans-serif';
 }
 
 .form-floating label {

@@ -1,5 +1,12 @@
-
-<div id="content" [ngStyle]="{ width: getWindowWidth() }" *ngIf="ticketList.length !==0"  >
+<ngx-spinner
+  bdColor = "rgba(0, 0, 0, 0)"
+  size = "small"
+  color = "#fff"
+  template="<img src='assets/dual.svg'>"
+  [fullScreen] = "true"
+>
+</ngx-spinner>
+<div id="content" [ngStyle]="{ width: getWindowWidth() }" *ngIf="(ticketList.length > 0)" >
   <div id="posts" class=" flush-left" *ngFor="let ticket of ticketList |
    paginate: { itemsPerPage:ticketsPerPage, currentPage: 1 } ">
     <div id="post-summary" class="post-summary">

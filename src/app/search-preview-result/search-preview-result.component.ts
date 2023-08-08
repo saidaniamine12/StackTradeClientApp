@@ -2,6 +2,8 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Ticket} from "../models/Ticket";
 import {ActivatedRoute} from "@angular/router";
 import {SearchService} from "../services/search/search.service";
+import {NgxSpinnerService} from "ngx-spinner";
+import {async} from "rxjs";
 
 @Component({
   selector: 'app-search-preview-result',
@@ -14,12 +16,16 @@ export class SearchPreviewResultComponent implements OnInit{
   ticketsPerPage: number = 10;
   searchQuery: string = '';
   selectedField: string = 'All';
+  isLoading: boolean = false;
+
 
   constructor(private route: ActivatedRoute,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    // this.ticketList = [];
+    this.isLoading = true;
+
     this.route.queryParams.subscribe(params => {
       this.searchQuery = params['query'];
       this.selectedField = params['selectedField'];
@@ -29,13 +35,20 @@ export class SearchPreviewResultComponent implements OnInit{
 
   //update the data when the page number changes
   updateData(): void {
+    this.ticketList = [];
+    this.spinner.show();
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      //this.spinner.hide();
+
+    }, 1000);
     this.searchService.fetchTextSearch(this.searchQuery,this.selectedField, this.ticketsPerPage)
       .subscribe(
         response => {
           console.log("response");
           console.log(response);
           this.ticketList = response;
-
+          this.spinner.hide();
         },
         error => {
           console.log("error");
@@ -44,6 +57,8 @@ export class SearchPreviewResultComponent implements OnInit{
         }
       );
     document.documentElement.scrollTop = 0;
+
+
   }
 
 
@@ -77,4 +92,6 @@ export class SearchPreviewResultComponent implements OnInit{
       contentDiv.style.width = this.getWindowWidth()-55 + 'px';
     }
   }
+
+  protected readonly async = async;
 }
