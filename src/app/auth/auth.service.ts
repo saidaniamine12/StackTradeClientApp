@@ -49,13 +49,13 @@ export class AuthService {
 
   logout(): void {
     const url = `${this.apiUrl}/logout`;
-    this.http.post(url, {},{withCredentials:true}).subscribe(
+    this.http.post(url, {}).subscribe(
       (response) => {
         this.purgeAuth();
         this.router.navigate(['/login']);
       },
       (error) => {
-        console.log(error);
+        console.log("err",error);
         this.purgeAuth();
       }
 

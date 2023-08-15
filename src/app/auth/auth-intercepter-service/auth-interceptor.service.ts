@@ -27,6 +27,7 @@ export class AuthInterceptorService implements HttpInterceptor{
 
       }
     });
+
     const xhr = req.clone({
       withCredentials: true
     });
@@ -35,7 +36,7 @@ export class AuthInterceptorService implements HttpInterceptor{
         (event: HttpEvent<any>) => {
           // Handle successful responses if needed
           if (event instanceof HttpResponse && event.body) {
-            if (this.isValidResponse(event.body)) {
+            if (this.isNotOkResponse(event.body)) {
               const response = event.body;
               if (response.status === 401 && !this.refresh){
                 this.refresh = true;
@@ -49,12 +50,8 @@ export class AuthInterceptorService implements HttpInterceptor{
                     }));
                   })
                 );
-
               }
-
-              // Handle the valid response here
             }
-
           }
         },
         (error: any) => {
@@ -65,7 +62,7 @@ export class AuthInterceptorService implements HttpInterceptor{
   }
 
 
-  isValidResponse(responseData: any): boolean {
+  isNotOkResponse(responseData: any): boolean {
     // Implement your logic to validate the response format
     // For example, check if responseData has the expected properties
     return (

@@ -1,91 +1,245 @@
 
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" >
-<div class="container profile" *ngIf="currentUser$ | async as currentUser">
-  <div class="col-md-10 col-sm-9 col-xs-12">
-    <div class="span12">
-      <div class="well well-small clearfix">
-        <div class="row-fluid">
-          <div class="box profile-picture">
-            <img src="{{currentUser.email}}" alt="No image found" class="img-thumbnail"/>
-          </div>
-          <div class="box">
-            <h2>{{ currentUser.id}}</h2>
-            <ul class="unstyled">
-              <li><i class="icon-phone"></i> 095 214 2042</li>
-              <li><i class="icon-envelope"></i> {{currentUser.email}}</li>
-            </ul>
+<div class="container-profile" *ngIf="currentUser$ | async as currentUser">
+  <div class="main">
+    <div class="profile-div">
+      <div class="well">
 
-            <div class="stats-container">
-              <div class="col-xs-4 col-sm-4 col-md-4 rating-stat stat">
-                <span class="badge">{{currentUser.id}}</span>
-                <label class="badge-label">reputation</label>
+        <div class="profile-header">
+          <div class="profile-header-label" >
+            <h1 class="profile-header-label-title">
+              <span>Profile</span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="profile-description">
+            <p>Manage your personal information</p>
+        </div>
+
+        <h3>
+          <span>Profile photo and header image</span>
+        </h3>
+
+
+        <div class="cover-profile-photo-container">
+
+          <header class="cover-container-header">
+            <div class="default-cover-photo">
+              <div>
+                <img src="https://ptc-directory-sited-static.us-east-1.prod.public.atl-paas.net/gradients/6.svg">
               </div>
-              <div class="col-xs-4 col-sm-4 col-md-4 stat">
-                <span class="badge">{{currentUser.id}}</span>
-                <label class="badge-label">questions</label>
-              </div>
-              <div class="col-xs-4 col-sm-4 col-md-4 views-stat stat">
-                <span class="badge">{{currentUser.id}}</span>
-                <label class="badge-label">answers</label>
+            </div>
+            <input type="file" accept=".jpg,.png" style="display: none">
+          </header>
+          <div class="profile-container">
+            <div class="profile-avatar">
+              <div class="avatar">
+                <span>
+                  <img src="assets/avatar.png">
+                </span>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="well clearfix">
-        <div>
-          <a *ngIf="!changeProfileImg && !deleteProfile" (click)="toggleChangeProfileImg()" class="btn btn-lg btn-info"
-             data-toggle="modal" data-target="#profile-img-update-modal">
-            <span class="glyphicon glyphicon-picture"></span>  Update profile picture
-          </a>
-        </div>
-
-        <div *ngIf="changeProfileImg">
-          <h3><label class="input-label">URL to your new profile picture</label></h3>
-          <div class="input-group input-form url-form">
-            <input #inputImgUrl type="email" class="form-control" placeholder="http://i.imgur.com/FMukDzK.jpg"
-                   (focus)="hideImgUrlWarn()">
-            <span *ngIf="imgUrlWarn" class="input-group-addon"
-                  tooltip="Url is too short!" placement="right">
-              <i class="glyphicon glyphicon-alert"></i>
-            </span>
-          </div>
-          <a (click)="postNewProfileImg(inputImgUrl)" class="button-confirm btn btn-lg btn-success">
-            <span class="glyphicon glyphicon-ok"></span> Confirm
-          </a>
-          <a (click)="toggleChangeProfileImg()" class="btn btn-lg btn-danger">
-            <span class="glyphicon glyphicon-remove"></span> Cancel
-          </a>
-        </div>
-
-        <div class="button-delete">
-          <div *ngIf="!changeProfileImg && !deleteProfile">
-            <a class="btn btn-lg btn-danger" >
-              <span class="glyphicon glyphicon-warning-sign"></span> Delete profile
-            </a>
+        <h3 class="about-you">
+          <span>About you</span>
+          <div class="buttons-container">
+            <button type="button" class="css-save-button" *ngIf="editUserInfoMode" (click)="saveInfoChanges()">Save</button>
+            <button type="button" class="css-cancel-button" *ngIf="editUserInfoMode" (click)="cancelInfoChanges()"  >Cancel</button>
+            <button type="button" class="css-edit-button" *ngIf="!editUserInfoMode" (click)="editInfo()" >Edit</button>
           </div>
 
-          <div *ngIf="deleteProfile">
-            <div class="password-label">
-              <h4><label class="password-label">Please enter password</label></h4>
-              <div class="input-form form-group input-group">
-                <input #inputPassword type="password" class="form-control" placeholder="********"
-                       (focus)="hidePasswordWarn()">
-                <span *ngIf="passwordWarn" class="input-group-addon"
-                      tooltip="Password is too short!" placement="right">
-                <i class="glyphicon glyphicon-alert"></i>
-              </span>
+        </h3>
+
+        <div class="about-you-container">
+          <div class="field-container">
+
+            <div class="field-wrapper">
+              <div class="items">
+                <label>
+                  <span>Name</span>
+                </label>
+                <div class="field-edit">
+                  <div role="presentation">
+                    <form [formGroup]="editProfileForm">
+                      <div class="css-1a">
+                        <div class="css-2a">
+                          <div class="css-3a" *ngIf="!editUserInfoMode">
+                            <div class="css-4a">
+                              {{currentUser.name}}
+                            </div>
+                          </div>
+                          <div class="css-3a-edit" *ngIf="editUserInfoMode">
+                            <div class="css-4a-edit">
+                              <input type="text"
+                                     formControlName="name"
+                                     >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
-            <a (click)="postDeleteProfile(inputPassword)" class="button-confirm btn btn-lg btn-success">
-              <span class="glyphicon glyphicon-ok"></span> Confirm
-            </a>
-            <a (click)="toggleDeleteProfile()" class="btn btn-lg btn-danger">
-              <span class="glyphicon glyphicon-remove"></span> Cancel
-            </a>
+
+            <div class="field-wrapper">
+              <div class="items">
+                <label>
+                  <span>Company</span>
+                </label>
+                <div class="field-edit">
+                  <div role="presentation">
+                    <form [formGroup]="editProfileForm">
+                      <div class="css-1a">
+                        <div class="css-2a">
+                          <div class="css-3a" *ngIf="!editUserInfoMode">
+                            <div class="css-4a">
+                              {{currentUser.companyName}}
+                            </div>
+                          </div>
+                          <div class="css-3a-edit" *ngIf="editUserInfoMode">
+                            <div class="css-4a-edit">
+                              <input type="text"
+                                      formControlName="companyName"
+                                      >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-wrapper">
+              <div class="items">
+                <label>
+                  <span>Location</span>
+                </label>
+                <div class="field-edit">
+                  <div role="presentation">
+                    <form [formGroup]="editProfileForm">
+                      <div class="css-1a">
+                        <div class="css-2a">
+                          <div class="css-3a" *ngIf="!editUserInfoMode">
+                            <div class="css-4a">
+                              {{currentUser.location}}
+                            </div>
+                          </div>
+                          <div class="css-3a-edit" *ngIf="editUserInfoMode">
+                            <div class="css-4a-edit">
+                              <input type="text"
+                                     formControlName="location"
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
+
+        <h3 class="about-you">
+          <span>Contact</span>
+        </h3>
+
+        <div class="about-you-container">
+          <div class="field-container">
+
+            <div class="field-wrapper">
+              <div class="items">
+                <label>
+                  <span>Email adress</span>
+                </label>
+                <div class="field-edit">
+                  <div role="presentation">
+                    <form [formGroup]="editProfileForm">
+                      <div class="css-1a">
+                        <div class="css-2a">
+                          <div class="css-3a" >
+                            <div class="css-user-email">
+                              {{currentUser.email}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+<!--      <div class="well clearfix">-->
+<!--        <div>-->
+<!--          <a *ngIf="!changeProfileImg && !deleteProfile" (click)="toggleChangeProfileImg()" class="btn btn-lg btn-info"-->
+<!--             data-toggle="modal" data-target="#profile-img-update-modal">-->
+<!--            <span class="glyphicon glyphicon-picture"></span>  Update profile picture-->
+<!--          </a>-->
+<!--        </div>-->
+
+<!--        <div *ngIf="changeProfileImg">-->
+<!--          <h3><label class="input-label">URL to your new profile picture</label></h3>-->
+<!--          <div class="input-group input-form url-form">-->
+<!--            <input #inputImgUrl type="email" class="form-control" placeholder="http://i.imgur.com/FMukDzK.jpg"-->
+<!--                   (focus)="hideImgUrlWarn()">-->
+<!--            <span *ngIf="imgUrlWarn" class="input-group-addon"-->
+<!--                  tooltip="Url is too short!" placement="right">-->
+<!--              <i class="glyphicon glyphicon-alert"></i>-->
+<!--            </span>-->
+<!--          </div>-->
+<!--          <a (click)="postNewProfileImg(inputImgUrl)" class="button-confirm btn btn-lg btn-success">-->
+<!--            <span class="glyphicon glyphicon-ok"></span> Confirm-->
+<!--          </a>-->
+<!--          <a (click)="toggleChangeProfileImg()" class="btn btn-lg btn-danger">-->
+<!--            <span class="glyphicon glyphicon-remove"></span> Cancel-->
+<!--          </a>-->
+<!--        </div>-->
+
+<!--        <div class="button-delete">-->
+<!--          <div *ngIf="!changeProfileImg && !deleteProfile">-->
+<!--            <a class="btn btn-lg btn-danger" >-->
+<!--              <span class="glyphicon glyphicon-warning-sign"></span> Delete profile-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div *ngIf="deleteProfile">-->
+<!--            <div class="password-label">-->
+<!--              <h4><label class="password-label">Please enter password</label></h4>-->
+<!--              <div class="input-form form-group input-group">-->
+<!--                <input #inputPassword type="password" class="form-control" placeholder="********"-->
+<!--                       (focus)="hidePasswordWarn()">-->
+<!--                <span *ngIf="passwordWarn" class="input-group-addon"-->
+<!--                      tooltip="Password is too short!" placement="right">-->
+<!--                <i class="glyphicon glyphicon-alert"></i>-->
+<!--              </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <a (click)="postDeleteProfile(inputPassword)" class="button-confirm btn btn-lg btn-success">-->
+<!--              <span class="glyphicon glyphicon-ok"></span> Confirm-->
+<!--            </a>-->
+<!--            <a (click)="toggleDeleteProfile()" class="btn btn-lg btn-danger">-->
+<!--              <span class="glyphicon glyphicon-remove"></span> Cancel-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       </div>
     </div>
   </div>

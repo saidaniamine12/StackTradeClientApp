@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import {Observable, pipe, shareReplay, tap} from "rxjs";
+import {Observable, shareReplay, tap} from "rxjs";
 import {User} from "../../models/User";
 import {Router} from "@angular/router";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../auth/auth.service";
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  private baseUrl = 'https://localhost:8443';
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -15,9 +17,8 @@ export class UserService {
               ) { }
 
   getCurrentUser(): Observable<any> {
-
-
-    return this.http.get<any>('https://localhost:8443/user/current', {withCredentials: true})
+    const url = `${this.baseUrl}/user/current`;
+    return this.http.get<any>(url, {withCredentials: true})
       .pipe(
         tap({
           next: ({ user}) => this.authService.setAuth(user),
@@ -27,27 +28,10 @@ export class UserService {
       );
   }
 
-  postDeleteUser() :Observable<any> {
-    return this.http.post<any>('https://localhost:8443/user/delete', {},{withCredentials: true})
-      .pipe(
-        tap({
-          next: ({ user}) => this.authService.setAuth(user),
-          error: () => this.authService.purgeAuth(),
-        }),
-        shareReplay(1),
-      );
-
+  updateUserInfo(updatedUser: any): Observable<any> {
+    const url = `${this.baseUrl}/user/update`;
+    return this.http.post<any>(url, updatedUser,{withCredentials: true})
   }
 
-  postImgUrl(newImgUrl: string) :Observable<any> {
-    return this.http.post<any>('https://localhost:8443/user/imgUrl', {imgUrl: newImgUrl},{withCredentials: true})
-      .pipe(
-        tap({
-          next: ({ user}) => this.authService.setAuth(user),
-          error: () => this.authService.purgeAuth(),
-        }),
-        shareReplay(1),
-      );
 
-  }
 }

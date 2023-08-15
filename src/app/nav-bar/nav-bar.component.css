@@ -17,6 +17,7 @@
   left: 0;
   padding: 0 80px;
   margin-bottom: 100px;
+  z-index: 1;
 }
 
 .navbar .inner_navbar{

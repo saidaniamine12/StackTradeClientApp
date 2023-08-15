@@ -4,4 +4,29 @@
   width: 100%;
   margin-bottom: 50px;
   background-color: #a12020;
+  margin-top: 3px;
+}
+
+.main-app-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.left-sidebar{
+  margin-left: 80px;
+  justify-content: space-between;
+  width: 180px;
+  height: 1000px;
+  margin-top: 7px;
+  border-right: 1px solid rgba(162, 159, 159, 0.5);
+  z-index: 0;
+  position: fixed;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }

@@ -1,3 +1,11 @@
 <app-nav-bar></app-nav-bar>
 <div class="col-md-12"></div>
-<router-outlet></router-outlet>
+<div class="main-app-container">
+  <div class="left-sidebar">
+    <app-left-sidebar></app-left-sidebar>
+  </div>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

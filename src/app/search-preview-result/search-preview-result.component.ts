@@ -92,4 +92,9 @@ export class SearchPreviewResultComponent implements OnInit{
   }
 
   protected readonly async = async;
+
+  openTicketInJiraServer(key: string) {
+    const linkUrl = 'https://jira.atlassian.com/browse/' + key;
+    window.open(linkUrl, '_blank');
+  }
 }

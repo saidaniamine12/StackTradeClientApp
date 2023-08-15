@@ -34,6 +34,7 @@
 .post-summary-content {
   margin-bottom: 10px;
   align-items: center;
+  margin-top: 10px;
 }
 
 .post-summary-content-title a {
@@ -41,7 +42,15 @@
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
+.post-summary .post-summary-content .post-summary-meta .user-card .user-card-info-username .assignee-reporter{
+  color: rgb(119, 119, 119);
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
 
 .post-summary-content-description {
   color: #555;

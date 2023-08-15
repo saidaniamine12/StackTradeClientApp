@@ -54,14 +54,12 @@ export class NavBarComponent {
         query: this.searchQuery,
         selectedField: this.selectedField
       }
-    }).then(r => console.log(r));
-    console.log(this.selectedField);
+    });
 
   }
 
   searchField(field: string) {
     this.selectedField = this.selectedField === field ? Fields.All : field;
-    console.log(this.selectedField);
     this.search();
   }
 
@@ -79,7 +77,10 @@ export class NavBarComponent {
   protected readonly Fields = Fields;
 
   loadUserProfile(id: number) {
-    console.log("load user profile")
     this.router.navigate(['user/'+id]);
+  }
+
+  latestViewedTickets() {
+    this.selectedField = Fields.All;
   }
 }

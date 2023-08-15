@@ -29,6 +29,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner-component";
 import {NgxSpinnerModule} from "ngx-spinner";
+import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
     LoginComponent,
     SignupComponent,
     UserProfileComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    LeftSidebarComponent
   ],
   imports: [
     BrowserModule,
