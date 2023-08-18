@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Ticket} from "../../models/Ticket";
 import {SearchResponse} from "../../models/SearchResponse";
+import {LatestViewedTicket} from "../../models/LatestViewedTicket";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {SearchResponse} from "../../models/SearchResponse";
 export class SearchService {
 
   private baseUrl = 'https://localhost:8443/tickets';
+
 
   constructor(private http: HttpClient) {}
 
@@ -62,8 +64,6 @@ export class SearchService {
   } | { searchEntities: any[]; totalHits: number }> {
     return this.getLatestTickets(pageNumber, ticketsPerPage).pipe(
       map(response => {
-        console.log('returned response');
-        console.log(response);
         const searchEntities = response.searchEntities;
         const totalHits = response.totalHits;
 
@@ -80,4 +80,30 @@ export class SearchService {
     );
   }
 
+
+  getLatestViewedTickets(ticketsPerPage: number): Observable<Ticket[]> {
+    const params = new HttpParams()
+      .set('ticketsPerPage', ticketsPerPage.toString());
+    const url = `${this.baseUrl}/latestViewedTickets`;
+    return this.http.get(url, {params}) as Observable<Ticket[]>;
+  }
+
+  fetchLatestViewedTickets(ticketsPerPage: number): Observable<Ticket[]> {
+    return this.getLatestViewedTickets(ticketsPerPage).pipe(
+      map(response => {
+        const searchEntities = response;
+        if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
+          return Ticket.mapResponseToTicketList(searchEntities);
+        }
+
+        // Return an empty response if no tickets are found
+        return [];
+      })
+    );
+  }
+
+  saveLatestViewedTicket(ticket_id:string) {
+    const url = this.baseUrl + '/latestViewedTicket/save';
+    return this.http.post(url,ticket_id);
+  }
 }

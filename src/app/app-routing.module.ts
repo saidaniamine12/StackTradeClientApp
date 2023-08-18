@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'user/:id', component: UserProfileComponent, canActivate: [authGuard] },
 
+
   // Add more routes as needed
 ];
 

@@ -23,17 +23,16 @@
 }
 
 .nav-links .link:hover {
-  background-color: rgba(211, 211, 211, 0.86);
   cursor: pointer;
 }
 
-.nav-links .link button{
-  color: black;
-  font-size: 14px;
-  font-family: 'Ubuntu', sans-serif;
-  font-style: normal;
-}
+
 
 .nav-links .link .route{
   color: #000000;
+}
+
+
+.active{
+  background-color: rgba(211, 211, 211, 0.86);
 }

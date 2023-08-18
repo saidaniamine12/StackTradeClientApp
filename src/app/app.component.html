@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <div class="col-md-12"></div>
 <div class="main-app-container">
-  <div class="left-sidebar">
+  <div class="left-sidebar" *ngIf="(isAuthenticated$ | async)">
     <app-left-sidebar></app-left-sidebar>
   </div>
   <div class="content-container">

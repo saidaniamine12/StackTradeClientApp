@@ -21,7 +21,6 @@ const Fields = {
 
 export class NavBarComponent {
   @Input() searchQuery: string = '';
-  // @ts-ignore
   selectedField: string = Fields.All;
   isValidInput: boolean = false;
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated;
@@ -53,10 +52,13 @@ export class NavBarComponent {
       queryParams: {
         query: this.searchQuery,
         selectedField: this.selectedField
+
       }
     });
 
   }
+
+
 
   searchField(field: string) {
     this.selectedField = this.selectedField === field ? Fields.All : field;

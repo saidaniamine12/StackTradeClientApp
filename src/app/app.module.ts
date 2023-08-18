@@ -30,6 +30,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner-component";
 import {NgxSpinnerModule} from "ngx-spinner";
 import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
+import { SetActiveDirective } from './shared/directives/set-active/set-active.directive';
+import {ActiveLinkService} from "./shared/active-link/active-link.service";
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
     SignupComponent,
     UserProfileComponent,
     LoadingSpinnerComponent,
-    LeftSidebarComponent
+    LeftSidebarComponent,
+    SetActiveDirective
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     SearchService,
+    ActiveLinkService,
     AuthService,
     UserService,
     {

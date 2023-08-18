@@ -70,12 +70,6 @@ export class TicketListComponent implements OnDestroy, OnInit, OnChanges {
 
   }
 
-  onPageChange(changes: MouseEvent): void {
-
-    console.log('MouseEvent event:', changes);
-    console.log('New page number:', this.pageNumber);
-    console.log('New page number:', this.ticketsPerPage);
-  }
 
   ngOnDestroy() {
   }
