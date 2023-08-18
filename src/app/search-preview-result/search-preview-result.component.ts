@@ -5,6 +5,7 @@ import {SearchService} from "../services/search/search.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {async} from "rxjs";
 import {ActiveLinkService} from "../shared/active-link/active-link.service";
+import {LocalStorageService} from "../services/local-storage/local-storage.service";
 
 @Component({
   selector: 'app-search-preview-result',
@@ -17,15 +18,14 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   ticketsPerPage: number = 10;
   searchQuery: string = '';
   selectedField: string = 'All';
-  isLoading: boolean = false;
-  numberOfLatestViewedTickets: number = 50;
   latestViewedTickets: boolean = false;
   localStorageIdArray: string[] = [];
 
   constructor(private route: ActivatedRoute,
               private searchService: SearchService,
               private spinner: NgxSpinnerService,
-              private activeLinkService: ActiveLinkService) {
+              private activeLinkService: ActiveLinkService,
+              private localStorageService: LocalStorageService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +38,6 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("destroy");
    this.latestViewedTickets = false;
     this.activeLinkService.setActiveState('latestViewedTickets', false);
   }
@@ -47,7 +46,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   updateData(): void {
     this.ticketList = [];
     this.spinner.show();
-    this.getTicketFromLocalStorage();
+    this.localStorageIdArray = this.localStorageService.getTicketFromLocalStorage();
     if (this.latestViewedTickets) {
       this.searchService.fetchLatestViewedTickets(this.ticketsPerPage)
         .subscribe(
@@ -66,6 +65,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
     if (this.searchQuery === '') {
       return;
     }
+    this.activeLinkService.setActiveState('latestViewedTickets', false);
     this.searchService.fetchTextSearch(this.searchQuery, this.selectedField, this.ticketsPerPage)
       .subscribe(
         response => {
@@ -111,7 +111,6 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected readonly async = async;
 
   openTicketInJiraServer(key: string, id: string) {
     const linkUrl = 'https://jira.spring.io/browse/' + key;
@@ -124,33 +123,8 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     )
-    this.addTicketToLocalStorage(id);
+    this.localStorageService.addTicketToLocalStorage(id);
   }
 
-  addTicketToLocalStorage(ticket_id: string) {
-    const ticket_idsJSON = localStorage.getItem('ticket_ids');
-    let ticket_ids_array;
-    let ticket_ids_set;
-    if (ticket_idsJSON !== null && ticket_idsJSON !== undefined && ticket_idsJSON !== '{}') {
-      ticket_ids_array = JSON.parse(ticket_idsJSON);
-      ticket_ids_set = new Set(ticket_ids_array);
-    } else {
-      ticket_ids_set = new Set();
-    }
-    // Add the new ticket_id to the Set
-    ticket_ids_set.add(ticket_id);
-    ticket_ids_array = Array.from(ticket_ids_set);
-    localStorage.setItem('ticket_ids', JSON.stringify(ticket_ids_array));
 
-  }
-
-  getTicketFromLocalStorage() : void {
-    const ticket_idsJSON = localStorage.getItem('ticket_ids');
-    let ticket_ids_array;
-    if (ticket_idsJSON !== null && ticket_idsJSON !== undefined && ticket_idsJSON !== '{}') {
-      ticket_ids_array = JSON.parse(ticket_idsJSON);
-      this.localStorageIdArray = ticket_ids_array;
-    }
-
-  }
 }

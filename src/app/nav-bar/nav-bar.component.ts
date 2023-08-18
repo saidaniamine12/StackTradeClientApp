@@ -48,6 +48,9 @@ export class NavBarComponent {
 
   search(): void {
     console.log(this.searchQuery);
+    if (this.searchQuery.trim() === '') {
+      return;
+    }
     this.router.navigate(['/search'], {
       queryParams: {
         query: this.searchQuery,

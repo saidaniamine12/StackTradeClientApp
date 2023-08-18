@@ -13,10 +13,10 @@ import {LoginComponent} from "./auth/login/login.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
 // Define your routes
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [authGuard]},
+  { path: '', component: TicketListComponent, canActivate: [authGuard]},
   { path: 'about', component: AboutComponent },
   { path: 'search', component: SearchPreviewResultComponent, canActivate: [authGuard]},
-  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  { path: 'home', component: TicketListComponent, canActivate: [authGuard]},
   { path: 'tickets', component: TicketListComponent, canActivate: [authGuard] },
   { path: 'tickets/:id', component: TicketComponent, canActivate: [authGuard]},
   { path: 'login', component: LoginComponent },

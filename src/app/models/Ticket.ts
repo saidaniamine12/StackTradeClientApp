@@ -9,7 +9,7 @@ export class Ticket {
     public summary: string,
     public projectName: string,
     public description: string,
-    public created: Date,
+    public resolutionDate: Date,
     public reporterName: String,
     public assigneeName: String
   ) {}
@@ -21,7 +21,7 @@ export class Ticket {
       ticket.summary ?? "",
       ticket.projectName ?? "",
       ticket.description ?? "",
-      new Date(ticket.created) ?? "",
+      new Date(ticket.resolutionDate) ?? "",
       ticket.reporterName ?? "",
       ticket.assigneeName ?? ""
     ));

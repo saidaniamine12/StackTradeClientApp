@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Ticket} from "../../models/Ticket";
 import {SearchResponse} from "../../models/SearchResponse";
-import {LatestViewedTicket} from "../../models/LatestViewedTicket";
 
 @Injectable({
   providedIn: 'root'
@@ -47,35 +46,27 @@ export class SearchService {
 
 
   //get the list of tickets from the search service
-  getLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<SearchResponse> {
+  getLatestSolvedTickets(ticketsPerPage: number): Observable<Ticket[]> {
       const params = new HttpParams()
-        .set('pageNumber', pageNumber.toString())
         .set('ticketsPerPage', ticketsPerPage.toString());
       const url = `${this.baseUrl}/latest`;
-    return this.http.get(url, {params}) as Observable<SearchResponse>;
+    return this.http.get(url, {params}) as Observable<Ticket[]>;
   }
 
 
 
   // @ts-ignore
-  fetchLatestTickets(pageNumber: number, ticketsPerPage: number): Observable<{
-    searchEntities: Ticket[];
-    totalHits: any
-  } | { searchEntities: any[]; totalHits: number }> {
-    return this.getLatestTickets(pageNumber, ticketsPerPage).pipe(
+  fetchLatestSolvedTickets(ticketsPerPage: number): Observable<Ticket[] | any[]> {
+    return this.getLatestSolvedTickets(ticketsPerPage).pipe(
       map(response => {
-        const searchEntities = response.searchEntities;
-        const totalHits = response.totalHits;
+        const searchEntities = response;
 
-        if (totalHits !== undefined && totalHits !== null && totalHits > 0) {
           if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
-            const ticketList = Ticket.mapResponseToTicketList(searchEntities);
-            return { searchEntities: ticketList, totalHits: totalHits };
+            return Ticket.mapResponseToTicketList(searchEntities) ;
           }
-        }
 
         // Return an empty response if no tickets are found
-        return { searchEntities: [], totalHits: 0 };
+        return [];
       })
     );
   }

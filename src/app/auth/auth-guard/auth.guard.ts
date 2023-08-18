@@ -13,8 +13,6 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   const userService = inject(UserService);
   const isAuthenticated$ = authService.isAuthenticated;
   let refresh = false;
-
-  console.log("authGuard")
   return authService.isAuthenticated.pipe(
     tap((isAuthenticated) => {
       if (!isAuthenticated && !refresh) {
