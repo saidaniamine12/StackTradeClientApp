@@ -111,7 +111,6 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
     }
   }
 
-
   openTicketInJiraServer(key: string, id: string) {
     const linkUrl = 'https://jira.spring.io/browse/' + key;
     window.open(linkUrl, '_blank');

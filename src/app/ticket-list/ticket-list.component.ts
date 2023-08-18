@@ -78,6 +78,7 @@ export class TicketListComponent implements OnDestroy, OnInit {
     this.localStorageService.addTicketToLocalStorage(id);
   }
 
+
   ngOnDestroy() {
     this.activeLinkService.setActiveState('home', false);
   }

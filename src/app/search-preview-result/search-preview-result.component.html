@@ -9,7 +9,7 @@
 <div id="content" [ngStyle]="{ width: getWindowWidth() }" *ngIf="(ticketList.length > 0)" >
   <div id="posts" class=" flush-left" *ngFor="let ticket of ticketList |
    paginate: { itemsPerPage:ticketsPerPage, currentPage: 1 } ">
-    <div id="post-summary" class="post-summary">
+    <div id="post-summary"  class="post-summary">
       <div class="post-summary-content">
         <h3 class="post-summary-content-title">
           <a [ngClass]="{summary:localStorageIdArray.includes(ticket.id) && !latestViewedTickets}"  href="javascript:void(0)" (click)="openTicketInJiraServer(ticket.key,ticket.id)" >{{ticket.summary}}</a>
