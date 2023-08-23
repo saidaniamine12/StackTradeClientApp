@@ -6,6 +6,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {async} from "rxjs";
 import {ActiveLinkService} from "../shared/active-link/active-link.service";
 import {LocalStorageService} from "../services/local-storage/local-storage.service";
+import {JiraServerTicket} from "../models/jira-server-extracted-tickets/JiraServerTicket";
 
 @Component({
   selector: 'app-search-preview-result',
@@ -14,7 +15,7 @@ import {LocalStorageService} from "../services/local-storage/local-storage.servi
 })
 export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   //get the list of tickets from the search service
-  ticketList: Ticket[] = [];
+  ticketList: JiraServerTicket[] = [];
   ticketsPerPage: number = 10;
   searchQuery: string = '';
   selectedField: string = 'All';
@@ -70,6 +71,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.ticketList = response;
+          console.log(response)
           this.spinner.hide();
         },
         error => {
@@ -112,7 +114,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   }
 
   openTicketInJiraServer(key: string, id: string) {
-    const linkUrl = 'https://jira.spring.io/browse/' + key;
+    const linkUrl = 'https://jira.atlassian.com/browse/' + key;
     window.open(linkUrl, '_blank');
     this.searchService.saveLatestViewedTicket(id).subscribe(
       response => {

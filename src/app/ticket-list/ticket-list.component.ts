@@ -5,9 +5,10 @@ import {tick} from "@angular/core/testing";
 import {SearchService} from "../services/search/search.service";
 import {FormControl} from "@angular/forms";
 import {NgxSpinnerService} from "ngx-spinner";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ActiveLinkService} from "../shared/active-link/active-link.service";
 import {LocalStorageService} from "../services/local-storage/local-storage.service";
+import {JiraServerTicket} from "../models/jira-server-extracted-tickets/JiraServerTicket";
 
 // Define a Question class
 
@@ -19,12 +20,12 @@ import {LocalStorageService} from "../services/local-storage/local-storage.servi
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnDestroy, OnInit {
-  ticketList: Ticket[] = [];
+  ticketList: JiraServerTicket[] | any[] = [];
   ticketsPerPage: number = 10;
   localStorageIdArray: string[] = [];
 
   constructor(
-    private route: ActivatedRoute,
+    private route: Router,
     private searchService: SearchService,
     private spinner: NgxSpinnerService,
     private activeLinkService: ActiveLinkService,
@@ -34,8 +35,6 @@ export class TicketListComponent implements OnDestroy, OnInit {
 
   changePageSize(size: number) {
     this.ticketsPerPage = size;
-    // Fetch data based on the new page size
-    console.log('New page size:', this.ticketsPerPage);
     this.updateData();
   }
 
@@ -62,20 +61,6 @@ export class TicketListComponent implements OnDestroy, OnInit {
         });
     document.documentElement.scrollTop = 0;
     return ;
-  }
-
-  openTicketInJiraServer(key: string, id: string) {
-    const linkUrl = 'https://jira.spring.io/browse/' + key;
-    window.open(linkUrl, '_blank');
-    this.searchService.saveLatestViewedTicket(id).subscribe(
-      response => {
-      },
-      error => {
-        console.log("error");
-        console.log(error);
-      }
-    )
-    this.localStorageService.addTicketToLocalStorage(id);
   }
 
 
@@ -107,5 +92,18 @@ export class TicketListComponent implements OnDestroy, OnInit {
   }
 
 
+  protected readonly tick = tick;
 
+  openTicketDetails(key: string, id: string) {
+    this.searchService.saveLatestViewedTicket(id).subscribe(
+      response => {
+      },
+      error => {
+        console.log("error");
+        console.log(error);
+      }
+    )
+    this.localStorageService.addTicketToLocalStorage(id);
+    this.route.navigate(['/tickets/' + id]);
+  }
 }

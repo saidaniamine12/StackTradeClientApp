@@ -1,8 +1,49 @@
-<div class="ticket-container" *ngIf="ticket!=null">
-  <h1 class="ticket-title">{{ticket.summary}}</h1>
-  <div class="ticket-details">
-    <div class="field">
-      <span id="description">{{ticket.description}}</span>
+<div class="ticket-container" *ngIf="ticket">
+  <div class="ticket-edit-form">
+    <header  class="ticket-header">
+      <div class="ticket-header-content">
+        <div class="aui-page-header">
+          <div class="aui-page-header-inner">
+            <div class="aui-page-header-main">
+              <ol class="aui-nav">
+                <li >
+                  <a id="project-name-val"></a>
+                </li>
+                <li >
+                  ::before
+                  <a class="ticket-link"
+                     href="/tickets/{{ticket.id}}"> {{ticket.key}}</a>
+                </li>
+              </ol>
+              <h1 id="summary-val">
+                {{ticket.fields.summary}}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="ticket-body-content">
+      <div class="ticket-body">
+        <div class="ticket-main-column">
+        </div>
+        <div class="ticket-side-column">
+          <div id="description-module">
+            <div id="descriptionmodule_heading" class="mod-header">
+              <h4 id="descriptionmodule-label">
+                Description
+              </h4>
+            </div>
+            <div class="mod-content">
+              <div id="description-val">
+                <div class="user-content-block" [innerHTML]="descriptionHtmlString">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

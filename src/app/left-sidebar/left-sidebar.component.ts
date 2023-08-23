@@ -21,7 +21,6 @@ export class LeftSidebarComponent {
   }
 
   getLatestViewedTickets() {
-    console.log("getLatestViewedTickets");
     this.activeLinkService.setActiveState('latestViewedTickets', true);
     this.router.navigate(['/search'], {
       queryParams: {

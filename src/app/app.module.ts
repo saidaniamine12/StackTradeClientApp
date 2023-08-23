@@ -32,7 +32,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
 import { SetActiveDirective } from './shared/directives/set-active/set-active.directive';
 import {ActiveLinkService} from "./shared/active-link/active-link.service";
-
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -66,6 +66,7 @@ import {ActiveLinkService} from "./shared/active-link/active-link.service";
     MatIconModule,
     MatButtonModule,
     NgxSpinnerModule,
+    MarkdownModule.forRoot()
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -9,20 +9,20 @@
 <div id="content" [ngStyle]="{ width: getWindowWidth() }" *ngIf="(ticketList.length > 0)" >
   <div id="posts" class=" flush-left" *ngFor="let ticket of ticketList |
    paginate: { itemsPerPage:ticketsPerPage, currentPage: 1 } ">
-    <div id="post-summary"  class="post-summary">
+    <div id="post-summary" class="post-summary">
       <div class="post-summary-content">
         <h3 class="post-summary-content-title">
-          <a [ngClass]="{summary:localStorageIdArray.includes(ticket.id) && !latestViewedTickets}"  href="javascript:void(0)" (click)="openTicketInJiraServer(ticket.key,ticket.id)" >{{ticket.summary}}</a>
+          <a  [ngClass]="{summary:localStorageIdArray.includes(ticket.id) }"  href="javascript:void(0)" (click)="openTicketInJiraServer(ticket.key,ticket.id)" >{{ticket?.fields?.summary}}</a>
         </h3>
         <div class="post-summary-content-description" >
-          {{ticket.description | maxLength: 300}}
+          {{ticket.fields.description | maxLength: 300}}
         </div>
         <div class="post-summary-meta">
           <div class="post-summary-meta-tags">
             <ul class="post-tag-list-wrapper">
               <li class="post-tag-list-item">
                 <a href="javascript:void(0)" >
-                  <span class="label label-info">{{ticket.projectName}}</span>
+                  <span class="label label-info">{{ticket?.fields?.project?.name}}</span>
                 </a>
               </li>
             </ul>
@@ -30,14 +30,14 @@
           <div class="user-card">
             <div class="user-card-info">
               <div class="user-card-info-username">
-                <span class="assignee-reporter">Assignee: </span><a href="javascript:void(0)">{{ticket.assigneeName}}</a>
+                <span class="assignee-reporter">Assignee: </span><a href="javascript:void(0)">{{ticket?.fields?.assignee?.displayName}}</a>
 
               </div>
               <div class="user-card-info-username">
-                <span class="assignee-reporter">Reporter: </span><a href="javascript:void(0)">{{ticket.reporterName}}</a>
+                <span class="assignee-reporter">Reporter: </span><a href="javascript:void(0)">{{ticket?.fields?.reporter?.displayName}}</a>
               </div>
               <time class="user-card-time">
-                <span class="relative">{{ticket.resolutionDate | date:'medium'}}</span>
+                <span class="relative">{{ticket?.fields?.updated | date:'medium'}}</span>
               </time>
             </div>
           </div>

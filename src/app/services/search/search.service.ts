@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Ticket} from "../../models/Ticket";
 import {SearchResponse} from "../../models/SearchResponse";
+import {JiraServerTicket} from "../../models/jira-server-extracted-tickets/JiraServerTicket";
 
 @Injectable({
   providedIn: 'root'
@@ -16,26 +17,26 @@ export class SearchService {
 
 
   //get ticket by id
-  getTicketById(id: string): Observable<Ticket> {
+  getTicketById(id: string): Observable<JiraServerTicket> {
     const url = `${this.baseUrl}/ticket/${id}`;
-    return this.http.get(url) as Observable<Ticket>;
+    return this.http.get(url) as Observable<JiraServerTicket>;
   }
 
-  textSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<Ticket[]> {
+  textSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<JiraServerTicket[]> {
     const params = new HttpParams()
       .set('ticketsPerPage', ticketsPerPage.toString())
       .set('selectedField', selectedField);
     const url = `${this.baseUrl}/search?query=${encodeURIComponent(query)}`;
-    return this.http.get(url, {params}) as Observable<Ticket[]>;
+    return this.http.get(url, {params}) as Observable<JiraServerTicket[]>;
   }
 
 
-  fetchTextSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<Ticket[]> {
+  fetchTextSearch(query: string,selectedField: string, ticketsPerPage: number): Observable<JiraServerTicket[]> {
     return this.textSearch(query,selectedField, ticketsPerPage).pipe(
       map(response => {
         const searchEntities = response;
           if (searchEntities !== undefined && searchEntities !== null  && searchEntities.length > 0) {
-            return Ticket.mapResponseToTicketList(searchEntities);
+            return response;
           }
 
         // Return an empty response if no tickets are found
@@ -46,25 +47,24 @@ export class SearchService {
 
 
   //get the list of tickets from the search service
-  getLatestSolvedTickets(ticketsPerPage: number): Observable<Ticket[]> {
+  getLatestSolvedTickets(ticketsPerPage: number): Observable<JiraServerTicket[]> {
       const params = new HttpParams()
         .set('ticketsPerPage', ticketsPerPage.toString());
       const url = `${this.baseUrl}/latest`;
-    return this.http.get(url, {params}) as Observable<Ticket[]>;
+    return this.http.get(url, {params}) as Observable<JiraServerTicket[]>;
   }
 
 
 
   // @ts-ignore
-  fetchLatestSolvedTickets(ticketsPerPage: number): Observable<Ticket[] | any[]> {
+  fetchLatestSolvedTickets(ticketsPerPage: number): Observable<JiraServerTicket[] | any[]> {
     return this.getLatestSolvedTickets(ticketsPerPage).pipe(
       map(response => {
         const searchEntities = response;
 
           if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
-            return Ticket.mapResponseToTicketList(searchEntities) ;
+            return searchEntities
           }
-
         // Return an empty response if no tickets are found
         return [];
       })
@@ -72,19 +72,19 @@ export class SearchService {
   }
 
 
-  getLatestViewedTickets(ticketsPerPage: number): Observable<Ticket[]> {
+  getLatestViewedTickets(ticketsPerPage: number): Observable<JiraServerTicket[]> {
     const params = new HttpParams()
       .set('ticketsPerPage', ticketsPerPage.toString());
     const url = `${this.baseUrl}/latestViewedTickets`;
-    return this.http.get(url, {params}) as Observable<Ticket[]>;
+    return this.http.get(url, {params}) as Observable<JiraServerTicket[]>;
   }
 
-  fetchLatestViewedTickets(ticketsPerPage: number): Observable<Ticket[]> {
+  fetchLatestViewedTickets(ticketsPerPage: number): Observable<JiraServerTicket[]> {
     return this.getLatestViewedTickets(ticketsPerPage).pipe(
       map(response => {
         const searchEntities = response;
         if (searchEntities !== undefined && searchEntities !== null && searchEntities.length > 0) {
-          return Ticket.mapResponseToTicketList(searchEntities);
+          return response;
         }
 
         // Return an empty response if no tickets are found
