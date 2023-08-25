@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Ticket} from "../models/Ticket";
 import {ActivatedRoute} from "@angular/router";
 import {SearchService} from "../services/search/search.service";
 import {AuthService} from "../auth/auth.service";
 import {JiraServerTicket} from "../models/jira-server-extracted-tickets/JiraServerTicket";
-import {tick} from "@angular/core/testing";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {MarkdownService} from "ngx-markdown";
+import {Comments} from "../models/jira-server-extracted-tickets/Comments";
 
 @Component({
   selector: 'app-ticket',
@@ -16,23 +14,26 @@ import {MarkdownService} from "ngx-markdown";
 export class TicketComponent implements OnInit{
    ticket: JiraServerTicket | null = null;
    descriptionHtmlString: SafeHtml | null = null;
+   comments:Comments[] = [];
 
 
     constructor(private route: ActivatedRoute,
                 private searchService: SearchService,
                 private auth:AuthService,
-                private sanitizer: DomSanitizer,
-                private markdownService: MarkdownService) {
+                private sanitizer: DomSanitizer) {
 
     }
 
     ngOnInit(): void {
       this.route.params.subscribe(result => {
         let ticketId = result['id'];
-        this.searchService.getTicketById(ticketId).subscribe( ticket => {
+        this.searchService.getTicketById(ticketId).subscribe(
+          ticket => {
           this.ticket = ticket;
-             const htmlString = this.markdownToHtml(this.ticket.fields.description)
-            this.descriptionHtmlString = this.sanitizer.bypassSecurityTrustHtml(htmlString);
+          this.comments = ticket.fields.comment.comments;
+            console.log(this.comments );
+          const htmlString = this.markdownToHtml(this.ticket.fields.description);
+          this.descriptionHtmlString = this.sanitizer.bypassSecurityTrustHtml(htmlString);
         },
           error => {
             console.log(error.error)
@@ -55,6 +56,4 @@ export class TicketComponent implements OnInit{
   }
 
 
-
-  protected readonly tick = tick;
 }

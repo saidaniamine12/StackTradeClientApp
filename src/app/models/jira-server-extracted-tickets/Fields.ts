@@ -2,7 +2,7 @@ import {Resolution} from "./Resolution";
 import {JirUser} from "./JirUser";
 import {IssueType} from "./IssueType";
 import {Project} from "./Project";
-import {CommentSection} from "./CommentSection";
+import {Comment} from "./Comment";
 import {Status} from "./Status";
 
 export class Fields{
@@ -19,7 +19,7 @@ export class Fields{
     public updated:Date,
     public description:string,
     public summary:string,
-    public comment:CommentSection,
+    public comment:Comment,
     public status:Status,
 
 

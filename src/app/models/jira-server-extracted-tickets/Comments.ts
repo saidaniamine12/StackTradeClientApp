@@ -9,4 +9,8 @@ export class Comments{
     public created: Date,
   ) {
   }
+  getCreated(): Date {
+    return this.created;
+  }
+
 }

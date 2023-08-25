@@ -1,6 +1,6 @@
 import {Comments} from "./Comments";
 
-export class CommentSection{
+export class Comment {
   constructor(
     public id:number,
     public maxResults: number,
