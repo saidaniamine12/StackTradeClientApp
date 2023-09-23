@@ -65,8 +65,8 @@
           "options": {
             "browserTarget": "my-p-angular:build",
             "ssl": true,
-            "sslCert": "ssl/local-cert.pem",
-            "sslKey": "ssl/local-key.pem",
+            "sslCert": "./ssl/localhost.crt",
+            "sslKey": "./ssl/localhost.key",
             "disableHostCheck": true
           },
           "configurations": {

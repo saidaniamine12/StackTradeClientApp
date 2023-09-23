@@ -12,7 +12,7 @@
     <div id="post-summary" class="post-summary">
       <div class="post-summary-content">
         <h3 class="post-summary-content-title">
-          <a  [ngClass]="{summary:localStorageIdArray.includes(ticket.id) }"  href="javascript:void(0)" (click)="openTicketInJiraServer(ticket.key,ticket.id)" >{{ticket?.fields?.summary}}</a>
+          <a  [ngClass]="{summary:localStorageIdArray.includes(ticket.id) }"  href="javascript:void(0)" (click)="openTicketDetails(ticket.key,ticket.id)" >{{ticket?.fields?.summary}}</a>
         </h3>
         <div class="post-summary-content-description" >
           {{ticket.fields.description | maxLength: 300}}

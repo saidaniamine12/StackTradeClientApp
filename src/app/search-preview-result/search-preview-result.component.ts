@@ -1,6 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Ticket} from "../models/Ticket";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SearchService} from "../services/search/search.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {async} from "rxjs";
@@ -23,6 +23,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
   localStorageIdArray: string[] = [];
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private searchService: SearchService,
               private spinner: NgxSpinnerService,
               private activeLinkService: ActiveLinkService,
@@ -113,9 +114,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
     }
   }
 
-  openTicketInJiraServer(key: string, id: string) {
-    const linkUrl = 'https://jira.atlassian.com/browse/' + key;
-    window.open(linkUrl, '_blank');
+  openTicketDetails(key: string, id: string) {
     this.searchService.saveLatestViewedTicket(id).subscribe(
       response => {
       },
@@ -125,6 +124,7 @@ export class SearchPreviewResultComponent implements OnInit, OnDestroy {
       }
     )
     this.localStorageService.addTicketToLocalStorage(id);
+    this.router.navigate(['/tickets/' + id]);
   }
 
 
